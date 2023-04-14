@@ -24,7 +24,8 @@ auto now()
 class Game
 {
 public:
-    Game(double framerate = 60.0)
+    Game(double initialFramerate = 60.0)
+      : framerate(initialFramerate)
     {
         initializeSdl();
         initializePlayer();
@@ -34,7 +35,6 @@ public:
     {
         using chrono::operator""us;
 
-        const double framerate = 60.0;
         const chrono::duration<double, micro> target_refresh_time = 1000000.0us / framerate;
         cout << 1000000.0 / framerate << endl;
 
@@ -43,7 +43,7 @@ public:
         auto next_time = start + wait_period;
         chrono::duration<double, micro> elapsed = wait_period;
 
-        const int tuning_iterations = 10;
+        const int tuning_iterations = 100;
         int tuning_iterator = 0;
         auto tuning_period_start = now();
  
@@ -93,7 +93,7 @@ private:
 
         int diplay_count = SDL_GetNumVideoDisplays();
 
-        SDL_GetCurrentDisplayMode(1, &DisplayMode);
+        SDL_GetCurrentDisplayMode(0, &DisplayMode);
 
         displayWidth = DisplayMode.w;
         displayHeight = DisplayMode.h;
