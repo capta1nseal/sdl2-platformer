@@ -35,32 +35,32 @@ public:
     {
         using chrono::operator""us;
 
-        const chrono::duration<double, micro> target_refresh_time = 1000000.0us / framerate;
+        const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
         cout << 1000000.0 / framerate << endl;
 
         auto start = now();
-        auto wait_period = target_refresh_time;
-        auto next_time = start + wait_period;
-        chrono::duration<double, micro> elapsed = wait_period;
+        auto waitPeriod = targetRefreshTime;
+        auto nextTime = start + waitPeriod;
+        chrono::duration<double, micro> elapsed = waitPeriod;
 
-        const int tuning_iterations = 100;
-        int tuning_iterator = 0;
-        auto tuning_period_start = now();
+        const int tuningIterations = 100;
+        int tuningIterator = 0;
+        auto tuningPeriodStart = now();
  
         running = true;
         draw();
         while (running)
         {
             start = now();
-            next_time = start + wait_period;
+            nextTime = start + waitPeriod;
 
             cout << elapsed.count() << endl;
-            tuning_iterator++;
-            if (tuning_iterator == tuning_iterations)
+            tuningIterator++;
+            if (tuningIterator == tuningIterations)
             {
-                wait_period += target_refresh_time - (now() - tuning_period_start) / tuning_iterations;
-                tuning_iterator = 0;
-                tuning_period_start = now();
+                waitPeriod += targetRefreshTime - (now() - tuningPeriodStart) / tuningIterations;
+                tuningIterator = 0;
+                tuningPeriodStart = now();
             }
             handleEvents();
 
@@ -68,7 +68,7 @@ public:
 
             draw();
 
-            this_thread::sleep_until(next_time);
+            this_thread::sleep_until(nextTime);
             elapsed = now() - start;
         }
     }
@@ -77,7 +77,7 @@ private:
     bool running;
     int displayWidth, displayHeight;
 
-    SDL_DisplayMode DisplayMode;
+    SDL_DisplayMode displayMode;
     SDL_Window *window;
     SDL_Renderer *renderer;
 
@@ -91,12 +91,19 @@ private:
     {
         SDL_Init(SDL_INIT_EVERYTHING);
 
-        int diplay_count = SDL_GetNumVideoDisplays();
+        int displayCount = SDL_GetNumVideoDisplays();
+        SDL_Rect displayBounds;
+        int displayIndexUnderCursor;
 
-        SDL_GetCurrentDisplayMode(0, &DisplayMode);
+        for (int i = 0; i < displayCount; i++)
+        {
+            SDL_GetDisplayBounds(i, &displayBounds);
+        }
 
-        displayWidth = DisplayMode.w;
-        displayHeight = DisplayMode.h;
+        SDL_GetCurrentDisplayMode(0, &displayMode);
+
+        displayWidth = displayMode.w;
+        displayHeight = displayMode.h;
 
         window = SDL_CreateWindow(
             "sdl-2d-game",
@@ -104,8 +111,8 @@ private:
             displayWidth, displayHeight,
             SDL_WINDOW_FULLSCREEN_DESKTOP);
 
-        Uint32 render_flags = SDL_RENDERER_ACCELERATED;
-        renderer = SDL_CreateRenderer(window, -1, render_flags);
+        Uint32 renderFlags = SDL_RENDERER_ACCELERATED;
+        renderer = SDL_CreateRenderer(window, -1, renderFlags);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderClear(renderer);
     }
