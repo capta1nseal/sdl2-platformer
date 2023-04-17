@@ -16,7 +16,7 @@
 
 using namespace std;
 
-auto now()
+chrono::_V2::steady_clock::time_point now()
 {
     return chrono::steady_clock::now();
 }
@@ -36,12 +36,8 @@ public:
         using chrono::operator""us;
 
         const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
-        cout << targetRefreshTime.count() << endl;
-
-        auto start = now();
-        auto waitPeriod = targetRefreshTime;
-        auto nextTime = start + waitPeriod;
-        chrono::duration<double, micro> elapsed = waitPeriod;
+        chrono::duration<double, micro> waitPeriod = targetRefreshTime;
+        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> nextTime;
 
         const int tuningIterations = (int) floor(framerate);
         int tuningIterator = 0;
@@ -51,10 +47,8 @@ public:
         draw();
         while (running)
         {
-            start = now();
-            nextTime = start + waitPeriod;
+            nextTime = now() + waitPeriod;
 
-            cout << elapsed.count() << endl;
             tuningIterator++;
             if (tuningIterator == tuningIterations)
             {
@@ -69,7 +63,6 @@ public:
             draw();
 
             this_thread::sleep_until(nextTime);
-            elapsed = now() - start;
         }
     }
 
