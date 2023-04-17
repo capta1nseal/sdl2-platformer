@@ -152,7 +152,7 @@ private:
 
     void tick()
     {
-        cout << "mui." << endl;
+        cout << "tick" << endl;
     }
 
     void draw()
