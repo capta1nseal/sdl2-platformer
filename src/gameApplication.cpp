@@ -43,7 +43,7 @@ public:
         auto nextTime = start + waitPeriod;
         chrono::duration<double, micro> elapsed = waitPeriod;
 
-        const int tuningIterations = 100;
+        const int tuningIterations = (int) floor(framerate);
         int tuningIterator = 0;
         auto tuningPeriodStart = now();
  
