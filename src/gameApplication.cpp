@@ -36,7 +36,7 @@ public:
         using chrono::operator""us;
 
         const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
-        cout << 1000000.0 / framerate << endl;
+        cout << targetRefreshTime.count() << endl;
 
         auto start = now();
         auto waitPeriod = targetRefreshTime;
