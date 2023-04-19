@@ -28,15 +28,24 @@ class Player
     public:
         Player()
         {
-            gravityVector.y = 100;
+            gravityVector.y = 2500;
 
-            inputAcceleration = 2500;
+            walkAcceleration = 5000;
+            jumpVelocity = 1000;
 
-            airResistance = 0.05;
+            jumpBonus = 50.0;
+            airControl = 0.05;
+
+            airResistance = 0.0005;
+            surfaceFriction = 0.01;
+
 
             hitbox.w = 32;
             hitbox.h = 32;
             updateHitboxPosition();
+
+            onGround = true;
+            jumping = false;
         }
 
         void updateInputs(array<bool, 7> newInputArray)
@@ -49,22 +58,53 @@ class Player
 
         void tick(double delta)
         {
-            if (inputArray[0]) acceleration.y -= inputAcceleration; // up arrow
-            if (inputArray[1]) acceleration.x += inputAcceleration; // right arrow
-            if (inputArray[2]) acceleration.y += inputAcceleration; // down arrow
-            if (inputArray[3]) acceleration.x -= inputAcceleration; // left arrow
+            jumping = false;
+            if (inputArray[4] and onGround) // Z - jump
+            {
+                velocity.y -= jumpVelocity;
+                jumping = true;
+            }
+            if (inputArray[1]) // right arrow
+            {
+                if (jumping) acceleration.x += walkAcceleration * jumpBonus;
+                else if (onGround) acceleration.x += walkAcceleration;
+                else acceleration.x += walkAcceleration * airControl;
+            }
+            if (inputArray[3]) // left arrow
+            {
+                if (jumping) acceleration.x -= walkAcceleration * jumpBonus;
+                else if (onGround) acceleration.x -= walkAcceleration;
+                else acceleration.x -= walkAcceleration * airControl;
+            }
 
             acceleration.add(gravityVector);
 
+            acceleration.scale(delta);
+
             acceleration.add(scaleVec2(velocity, -1 * airResistance));
 
-            acceleration.scale(delta);
+            if (onGround)
+            {
+                acceleration.x -= velocity.x * surfaceFriction;
+            }
 
             velocity.add(acceleration);
 
             acceleration.zero();
 
+            previousPosition.setEqual(position);
+
             position.add(scaleVec2(velocity, delta));
+
+            onGround = false;
+
+            if (position.y > 1200 - hitbox.w)
+            {
+                velocity.x *= 1 - velocity.y * 0.0005;
+                velocity.y = 0.0;
+                position.y = 1200.0 - hitbox.w;
+                onGround = true;
+            }
 
             updateHitboxPosition();
         }
@@ -81,9 +121,17 @@ class Player
         Vec2 acceleration;
         Vec2 gravityVector;
 
-        double inputAcceleration; 
+        bool onGround;
+        bool jumping;
+
+        double walkAcceleration; 
+        double jumpVelocity;
+
+        double jumpBonus;
+        double airControl;
 
         double airResistance;
+        double surfaceFriction;
 
         SDL_Rect hitbox;
 

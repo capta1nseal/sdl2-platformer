@@ -9,6 +9,12 @@ struct Vec2
         y = 0.0;
     }
 
+    void setEqual(Vec2 other)
+    {
+        x = other.x;
+        y = other.y;
+    }
+
     void add(Vec2 other)
     {
         x += other.x;

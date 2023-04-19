@@ -160,6 +160,9 @@ private:
         if (keyboardState[SDL_SCANCODE_RIGHT]) inputArray[1] = true;
         if (keyboardState[SDL_SCANCODE_DOWN]) inputArray[2] = true;
         if (keyboardState[SDL_SCANCODE_LEFT]) inputArray[3] = true;
+        if (keyboardState[SDL_SCANCODE_Z]) inputArray[4] = true;
+        if (keyboardState[SDL_SCANCODE_X]) inputArray[5] = true;
+        if (keyboardState[SDL_SCANCODE_C]) inputArray[6] = true;
 
         if (SDL_GetMouseState(&mouseX, &mouseY))
         {}
