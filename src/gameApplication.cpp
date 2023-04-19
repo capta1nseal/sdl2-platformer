@@ -59,7 +59,11 @@ public:
             }
             handleEvents();
 
-            tick(delta.count());
+            for (int i = 0; i < physicsSubsteps; i++)
+            {
+                tick(delta.count() / (double) physicsSubsteps);
+            }
+            
 
             draw();
 
@@ -85,6 +89,8 @@ private:
     int mouseX, mouseY;
 
     Player player;
+
+    int physicsSubsteps = 4;
 
     void initializeSdl()
     {
