@@ -63,11 +63,15 @@ public:
             {
                 tick(delta.count() / (double) physicsSubsteps);
             }
-            
 
             draw();
 
-            cout << (int) floor(1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) / 10) * " " << "|" << endl;
+            int accuracy = (int) floor(1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) / 10);
+            for (int i = 0; i < accuracy; i++)
+            {
+                cout << " ";
+            }
+            cout << "|" << endl;
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
