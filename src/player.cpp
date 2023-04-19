@@ -33,22 +33,10 @@ class Player
 
         void handleEvents(array<bool, 7> inputArray)
         {
-            if (inputArray[0]) // up arrow
-            {
-                acceleration.y -= 0.1;
-            }
-            if (inputArray[1]) // right arrow
-            {
-                acceleration.x += 0.1;
-            }
-            if (inputArray[2]) // down arrow
-            {
-                acceleration.y += 0.1;
-            }
-            if (inputArray[3]) // left arrow
-            {
-                acceleration.x -= 0.1;
-            }
+            if (inputArray[0]) acceleration.y -= 0.1; // up arrow
+            if (inputArray[1]) acceleration.x += 0.1; // right arrow
+            if (inputArray[2]) acceleration.y += 0.1; // down arrow
+            if (inputArray[3]) acceleration.x -= 0.1; // left arrow
         }
 
         void tick()

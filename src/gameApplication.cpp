@@ -77,6 +77,7 @@ private:
     double framerate;
 
     SDL_Event event;
+    const Uint8* keystate;
     array<bool, 7> inputArray;
 
     int mouseX, mouseY;
@@ -113,6 +114,7 @@ private:
         SDL_RenderClear(renderer);
 
         for (int i = 0; i < 7; i++) inputArray[i] = false;
+        keystate = SDL_GetKeyboardState(NULL);
     }
 
     void initializePlayer()
@@ -141,16 +143,14 @@ private:
             }
         }
 
-        // const Uint8* keystate = SDL_GetKeyboardState(NULL); RETURN HERE
-
         SDL_PumpEvents();
 
         for (int i = 0; i < 7; i++) inputArray[i] = false;
 
-        // if (keystate[SDLK_UP]) inputArray[0] = true;
-        // if (keystate[SDLK_RIGHT]) inputArray[1] = true;
-        // if (keystate[SDLK_DOWN]) inputArray[2] = true;
-        // if (keystate[SDLK_LEFT]) inputArray[3] = true;
+        if (keystate[SDLK_UP]) inputArray[0] = true;
+        if (keystate[SDLK_RIGHT]) inputArray[1] = true;
+        if (keystate[SDLK_DOWN]) inputArray[2] = true;
+        if (keystate[SDLK_LEFT]) inputArray[3] = true;
 
         if (SDL_GetMouseState(&mouseX, &mouseY))
         {
