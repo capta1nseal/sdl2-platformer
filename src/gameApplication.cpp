@@ -1,11 +1,11 @@
-// chrono and thread used for accurately timing the main loop execution
+//debugging
+#include <iostream>
+
+// accurately timing the main loop execution
 #include <chrono>
 #include <thread>
 
-// used for SDL2 displays
-#include <vector>
-
-// SDL2 is used to interface with the display drivers, also used for some game-related features
+// interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
 // class for player, includes controls, physics and drawing
@@ -67,6 +67,7 @@ public:
 
             draw();
 
+            cout << delta.count() << endl;
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
@@ -90,7 +91,7 @@ private:
 
     Player player;
 
-    int physicsSubsteps = 100;
+    int physicsSubsteps = 10;
 
     void initializeSdl()
     {
