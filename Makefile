@@ -4,7 +4,7 @@ LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image
 
 INFILE = src/main.cpp
 INCLUDES = src/gameApplication.cpp src/player.cpp
-OUTFILE = bin/sdl2-2d-game
+OUTFILE = bin/sdl2-platformer
 
 
 $(OUTFILE): $(INFILE) $(INCLUDES)

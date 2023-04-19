@@ -71,8 +71,6 @@ class Player
 
         void draw(SDL_Renderer *renderer)
         {
-            cout << "drawing player" << endl;
-
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             SDL_RenderFillRect(renderer, &hitbox);
         }
