@@ -90,7 +90,7 @@ private:
 
     Player player;
 
-    int physicsSubsteps = 4;
+    int physicsSubsteps = 100;
 
     void initializeSdl()
     {
