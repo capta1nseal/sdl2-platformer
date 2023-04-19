@@ -30,7 +30,9 @@ class Player
         {
             gravityVector.y = 100;
 
-            inputAcceleration = 1000;
+            inputAcceleration = 2500;
+
+            airResistance = 0.05;
 
             hitbox.w = 32;
             hitbox.h = 32;
@@ -49,7 +51,7 @@ class Player
         {
             acceleration.add(gravityVector);
 
-            acceleration.add(scaleVec2(velocity, -0.01));
+            acceleration.add(scaleVec2(velocity, -1 * airResistance));
 
             acceleration.scale(delta);
 
@@ -77,6 +79,8 @@ class Player
         Vec2 gravityVector;
 
         double inputAcceleration; 
+
+        double airResistance;
 
         SDL_Rect hitbox;
 
