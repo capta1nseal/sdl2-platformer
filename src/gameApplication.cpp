@@ -108,7 +108,7 @@ private:
 
         window = SDL_CreateWindow(
             "sdl-2d-game",
-            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+            displayBounds.x, displayBounds.y,
             displayWidth, displayHeight,
             SDL_WINDOW_FULLSCREEN_DESKTOP);
 
