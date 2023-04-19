@@ -67,7 +67,7 @@ public:
 
             draw();
 
-            cout << 1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) % 10 * " " << "|" << endl;
+            cout << (int) floor(1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) / 10) * " " << "|" << endl;
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
