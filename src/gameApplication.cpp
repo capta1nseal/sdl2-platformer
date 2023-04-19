@@ -1,6 +1,5 @@
 //debugging
 #include <iostream>
-#include <iomanip>
 
 // accurately timing the main loop execution
 #include <chrono>
@@ -68,7 +67,7 @@ public:
 
             draw();
 
-            cout << setprecision(10) <<targetRefreshTime.count() * 0.000001 - delta.count() << endl;
+            cout << 1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) % 10 * " " << "|" << endl;
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
