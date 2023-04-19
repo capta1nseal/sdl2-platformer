@@ -47,6 +47,8 @@ class Player
 
         void tick(double delta)
         {
+            acceleration.scale(delta)
+
             acceleration.add(gravityVector);
 
             acceleration.add(scaleVec2(velocity, -0.01));
