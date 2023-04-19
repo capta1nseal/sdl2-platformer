@@ -1,6 +1,3 @@
-// mainly used for debugging, should be removed for the final build
-#include <iostream>
-
 // chrono and thread used for accurately timing the main loop execution
 #include <chrono>
 #include <thread>
@@ -91,13 +88,20 @@ private:
         int displayCount = SDL_GetNumVideoDisplays();
         SDL_Rect displayBounds;
         int displayIndexUnderCursor;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        SDL_Point mousePoint = {mouseX, mouseY};
 
         for (int i = 0; i < displayCount; i++)
         {
             SDL_GetDisplayBounds(i, &displayBounds);
+            if (SDL_PointInRect(&mousePoint, &displayBounds))
+            {
+                displayIndexUnderCursor = i;
+                break;
+            }
         }
 
-        SDL_GetCurrentDisplayMode(0, &displayMode);
+        SDL_GetCurrentDisplayMode(displayIndexUnderCursor, &displayMode);
 
         displayWidth = displayMode.w;
         displayHeight = displayMode.h;
@@ -118,9 +122,7 @@ private:
     }
 
     void initializePlayer()
-    {
-        cout << "initializing player" << endl;
-    }
+    {}
 
     void handleEvents()
     {
@@ -153,9 +155,7 @@ private:
         if (keyboardState[SDL_SCANCODE_LEFT]) inputArray[3] = true;
 
         if (SDL_GetMouseState(&mouseX, &mouseY))
-        {
-            cout << "mouse event at (" << mouseX << "," << mouseY << ")" << endl;
-        }
+        {}
 
         player.handleEvents(inputArray);
     }

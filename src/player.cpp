@@ -1,10 +1,14 @@
-#include <iostream> // debugging
+// debugging
+#include <iostream>
 
-#include <array> // used for vector quantities (array<double, 2>)
+// input array
+#include <array>
 
-#include <SDL2/SDL.h> // used for drawing and collision rect
+// drawing and collision rect
+#include <SDL2/SDL.h>
 
-#include "vec2.cpp" // used for storing 2D vector quantities
+// storing 2D vector quantities
+#include "vec2.cpp
 
 using namespace std;
 
