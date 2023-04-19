@@ -28,9 +28,9 @@ class Player
     public:
         Player()
         {
-            gravityVector.y = 5;
+            gravityVector.y = 100;
 
-            inputAcceleration = 50;
+            inputAcceleration = 1000;
 
             hitbox.w = 32;
             hitbox.h = 32;
@@ -47,11 +47,11 @@ class Player
 
         void tick(double delta)
         {
-            acceleration.scale(delta);
-
             acceleration.add(gravityVector);
 
             acceleration.add(scaleVec2(velocity, -0.01));
+
+            acceleration.scale(delta);
 
             velocity.add(acceleration);
 
