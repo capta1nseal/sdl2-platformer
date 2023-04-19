@@ -68,6 +68,7 @@ public:
             draw();
 
             cout << delta.count() << endl;
+            cout << "mui." << endl;
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
