@@ -33,8 +33,11 @@ public:
         using chrono::operator""us;
 
         const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
+        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> start;
         chrono::duration<double, micro> waitPeriod = targetRefreshTime;
         chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> nextTime;
+        
+        chrono::duration<double> delta;
 
         const int tuningIterations = (int) floor(framerate);
         int tuningIterator = 0;
@@ -44,7 +47,8 @@ public:
         draw();
         while (running)
         {
-            nextTime = now() + waitPeriod;
+            start = now();
+            nextTime = start + waitPeriod;
 
             tuningIterator++;
             if (tuningIterator == tuningIterations)
@@ -55,11 +59,12 @@ public:
             }
             handleEvents();
 
-            tick();
+            tick(delta.count());
 
             draw();
 
             this_thread::sleep_until(nextTime);
+            delta = now() - start()
         }
     }
 
@@ -144,9 +149,9 @@ private:
         player.handleEvents(inputArray);
     }
 
-    void tick()
+    void tick(double delta)
     {
-        player.tick();
+        player.tick(delta);
     }
 
     void draw()

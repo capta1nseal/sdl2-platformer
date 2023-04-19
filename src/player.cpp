@@ -45,7 +45,7 @@ class Player
             if (inputArray[3]) acceleration.x -= inputAcceleration; // left arrow
         }
 
-        void tick()
+        void tick(double delta)
         {
             acceleration.add(gravityVector);
 
@@ -55,7 +55,7 @@ class Player
 
             acceleration.zero();
 
-            position.add(velocity);
+            position.add(scaleVec2(velocity, delta));
 
             updateHitboxPosition();
         }

@@ -14,4 +14,10 @@ struct Vec2
         x += other.x;
         y += other.y;
     }
+
+    void scale(double scalar)
+    {
+        x *= scalar;
+        y *= scalar;
+    }
 };
