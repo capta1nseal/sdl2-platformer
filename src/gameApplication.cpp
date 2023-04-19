@@ -1,5 +1,6 @@
 //debugging
 #include <iostream>
+#include <cmath>
 
 // accurately timing the main loop execution
 #include <chrono>
@@ -66,7 +67,7 @@ public:
 
             draw();
 
-            int accuracy = (int) floor(1.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) / 10);
+            int accuracy = (int) sqrt(10.0 / (targetRefreshTime.count() * 0.000001 - delta.count()) / 10);
             for (int i = 0; i < accuracy; i++)
             {
                 cout << " ";
