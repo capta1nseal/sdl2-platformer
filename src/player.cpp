@@ -39,16 +39,21 @@ class Player
             updateHitboxPosition();
         }
 
-        void handleEvents(array<bool, 7> inputArray)
+        void updateInputs(array<bool, 7> newInputArray)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                inputArray[i] = newInputArray[i];
+            }
+        }
+
+        void tick(double delta)
         {
             if (inputArray[0]) acceleration.y -= inputAcceleration; // up arrow
             if (inputArray[1]) acceleration.x += inputAcceleration; // right arrow
             if (inputArray[2]) acceleration.y += inputAcceleration; // down arrow
             if (inputArray[3]) acceleration.x -= inputAcceleration; // left arrow
-        }
 
-        void tick(double delta)
-        {
             acceleration.add(gravityVector);
 
             acceleration.add(scaleVec2(velocity, -1 * airResistance));
@@ -83,6 +88,8 @@ class Player
         double airResistance;
 
         SDL_Rect hitbox;
+
+        array<bool, 7> inputArray;
 
         void updateHitboxPosition()
         {

@@ -152,7 +152,7 @@ private:
         if (SDL_GetMouseState(&mouseX, &mouseY))
         {}
 
-        player.handleEvents(inputArray);
+        player.updateInputs(&inputArray);
     }
 
     void tick(double delta)
