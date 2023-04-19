@@ -67,7 +67,7 @@ public:
 
             draw();
 
-            int accuracy = (int) (targetRefreshTime.count() * 0.000001 - delta.count()) * 100000000;
+            int accuracy = (int) ((targetRefreshTime.count() * 0.000001 - delta.count()) * 100000000) ;
             for (int i = 0; i < accuracy; i++)
             {
                 cout << " ";
