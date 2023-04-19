@@ -64,7 +64,7 @@ public:
             draw();
 
             this_thread::sleep_until(nextTime);
-            delta = now() - start()
+            delta = now() - start();
         }
     }
 
