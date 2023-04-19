@@ -21,7 +21,7 @@ chrono::_V2::steady_clock::time_point now()
 class Game
 {
 public:
-    Game(double initialFramerate = 60.0)
+    Game(double initialFramerate = 240.0)
       : framerate(initialFramerate)
     {
         initializeSdl();
