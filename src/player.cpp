@@ -26,6 +26,8 @@ class Player
         {
             gravityVector.y = 0.5;
 
+            inputAcceleration = 0.5;
+
             hitbox.w = 32;
             hitbox.h = 32;
             updateHitboxPosition();
@@ -33,10 +35,10 @@ class Player
 
         void handleEvents(array<bool, 7> inputArray)
         {
-            if (inputArray[0]) acceleration.y -= 0.1; // up arrow
-            if (inputArray[1]) acceleration.x += 0.1; // right arrow
-            if (inputArray[2]) acceleration.y += 0.1; // down arrow
-            if (inputArray[3]) acceleration.x -= 0.1; // left arrow
+            if (inputArray[0]) acceleration.y -= inputAcceleration; // up arrow
+            if (inputArray[1]) acceleration.x += inputAcceleration; // right arrow
+            if (inputArray[2]) acceleration.y += inputAcceleration; // down arrow
+            if (inputArray[3]) acceleration.x -= inputAcceleration; // left arrow
         }
 
         void tick()
@@ -67,6 +69,8 @@ class Player
         Vec2 velocity;
         Vec2 acceleration;
         Vec2 gravityVector;
+
+        double inputAcceleration; 
 
         SDL_Rect hitbox;
 
