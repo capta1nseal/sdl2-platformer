@@ -28,9 +28,9 @@ class Player
     public:
         Player()
         {
-            gravityVector.y = 0.5;
+            gravityVector.y = 5;
 
-            inputAcceleration = 0.5;
+            inputAcceleration = 50;
 
             hitbox.w = 32;
             hitbox.h = 32;
