@@ -1,6 +1,3 @@
-// debugging
-#include <iostream>
-
 // chrono and thread used for accurately timing the main loop execution
 #include <chrono>
 #include <thread>
@@ -88,33 +85,16 @@ private:
     {
         SDL_Init(SDL_INIT_EVERYTHING);
 
-        int displayCount = SDL_GetNumVideoDisplays();
-        cout << displayCount << endl;
-        SDL_Rect displayBounds;
-        int displayIndexUnderCursor;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        SDL_Point mousePoint = {mouseX, mouseY};
-
-        for (int i = 0; i < displayCount; i++)
-        {
-            SDL_GetDisplayBounds(i, &displayBounds);
-            if (SDL_PointInRect(&mousePoint, &displayBounds))
-            {
-                displayIndexUnderCursor = i;
-                break;
-            }
-        }
-
-        SDL_GetCurrentDisplayMode(displayIndexUnderCursor, &displayMode);
+        SDL_GetCurrentDisplayMode(0, &displayMode);
 
         displayWidth = displayMode.w;
         displayHeight = displayMode.h;
 
         window = SDL_CreateWindow(
             "sdl-2d-game",
-            displayBounds.x, displayBounds.y,
+            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             displayWidth, displayHeight,
-            SDL_WINDOW_FULLSCREEN);
+            SDL_WINDOW_FULLSCREEN_DESKTOP);
 
         Uint32 renderFlags = SDL_RENDERER_ACCELERATED;
         renderer = SDL_CreateRenderer(window, -1, renderFlags);
