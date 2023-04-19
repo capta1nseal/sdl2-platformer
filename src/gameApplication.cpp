@@ -80,6 +80,8 @@ private:
 
     int mouseX, mouseY;
 
+    Player player;
+
     void initializeSdl()
     {
         SDL_Init(SDL_INIT_EVERYTHING);
@@ -112,13 +114,7 @@ private:
 
     void initializePlayer()
     {
-        SDL_Colour playerColour = SDL_Colour();
-        playerColour.r = 255;
-        playerColour.g = 255;
-        playerColour.b = 255;
-        playerColour.a = 255;
-
-        Player player = Player(playerColour);
+        cout << "initializing player" << endl;
     }
 
     void handleEvents()
@@ -152,7 +148,7 @@ private:
 
     void tick()
     {
-        cout << "tick" << endl;
+        player.tick();
     }
 
     void draw()
@@ -161,6 +157,8 @@ private:
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(renderer, NULL);
+
+        player.draw(renderer);
 
         SDL_RenderPresent(renderer);
     }
