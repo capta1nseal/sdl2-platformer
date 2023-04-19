@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 
 // storing 2D vector quantities
-#include "vec2.cpp
+#include "vec2.cpp"
 
 using namespace std;
 
