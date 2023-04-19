@@ -77,6 +77,7 @@ private:
     double framerate;
 
     SDL_Event event;
+    array<bool, 7> inputArray;
 
     int mouseX, mouseY;
 
@@ -110,6 +111,8 @@ private:
         renderer = SDL_CreateRenderer(window, -1, renderFlags);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderClear(renderer);
+
+        for (int i = 0; i < 7; i++) inputArray[i] = false;
     }
 
     void initializePlayer()
@@ -138,12 +141,23 @@ private:
             }
         }
 
+        // const Uint8* keystate = SDL_GetKeyboardState(NULL); RETURN HERE
+
         SDL_PumpEvents();
+
+        for (int i = 0; i < 7; i++) inputArray[i] = false;
+
+        // if (keystate[SDLK_UP]) inputArray[0] = true;
+        // if (keystate[SDLK_RIGHT]) inputArray[1] = true;
+        // if (keystate[SDLK_DOWN]) inputArray[2] = true;
+        // if (keystate[SDLK_LEFT]) inputArray[3] = true;
 
         if (SDL_GetMouseState(&mouseX, &mouseY))
         {
             cout << "mouse event at (" << mouseX << "," << mouseY << ")" << endl;
         }
+
+        player.handleEvents(inputArray);
     }
 
     void tick()

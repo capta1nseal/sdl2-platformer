@@ -6,16 +6,8 @@
 
 #include "vec2.cpp" // used for storing 2D vector quantities
 
-#include "inputData.cpp" // used for passing the relevant key states from them main game application to thye player object
-
 using namespace std;
 
-
-void addToFirst(Vec2 &first, Vec2 second)
-{
-    first.x += second.x;
-    first.y += second.y;
-}
 
 Vec2 scaleVec2(Vec2 vector, double scalar)
 {
@@ -39,21 +31,21 @@ class Player
             updateHitboxPosition();
         }
 
-        void handleEvents(InputData inputData)
+        void handleEvents(array<bool, 7> inputArray)
         {
-            if (inputData.inputArray[0]) // up arrow
+            if (inputArray[0]) // up arrow
             {
                 acceleration.y -= 0.1;
             }
-            if (inputData.inputArray[1]) // right arrow
+            if (inputArray[1]) // right arrow
             {
                 acceleration.x += 0.1;
             }
-            if (inputData.inputArray[2]) // down arrow
+            if (inputArray[2]) // down arrow
             {
                 acceleration.y += 0.1;
             }
-            if (inputData.inputArray[3]) // left arrow
+            if (inputArray[3]) // left arrow
             {
                 acceleration.x -= 0.1;
             }
@@ -61,15 +53,15 @@ class Player
 
         void tick()
         {
-            addToFirst(acceleration, gravityVector);
+            acceleration.add(gravityVector);
 
-            addToFirst(acceleration, scaleVec2(velocity, -0.01));
+            acceleration.add(scaleVec2(velocity, -0.01));
 
-            addToFirst(velocity, acceleration);
+            velocity.add(acceleration);
 
             acceleration.zero();
 
-            addToFirst(position, velocity);
+            position.add(velocity);
 
             updateHitboxPosition();
         }

@@ -8,4 +8,10 @@ struct Vec2
         x = 0.0;
         y = 0.0;
     }
+
+    void add(Vec2 other)
+    {
+        x += other.x;
+        y += other.y;
+    }
 };
