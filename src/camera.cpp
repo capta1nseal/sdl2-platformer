@@ -20,6 +20,11 @@ public:
         position.set(newPosition);
     }
 
+    Vec2 getPosition()
+    {
+        return position;
+    }
+
     void setTarget(Vec2 newTargetPosition)
     {
         targetPosition = newTargetPosition;
