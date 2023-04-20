@@ -9,7 +9,7 @@ struct Vec2
         y = 0.0;
     }
 
-    void setEqual(Vec2 other)
+    void set(Vec2 other)
     {
         x = other.x;
         y = other.y;
@@ -27,3 +27,21 @@ struct Vec2
         y *= scalar;
     }
 };
+
+Vec2 subtractVec2(Vec2 first, Vec2 second)
+{
+    Vec2 returnVector;
+    returnVector.x = first.x - second.x;
+    returnVector.y = first.y - second.y;
+    return returnVector;
+}
+
+Vec2 scaleVec2(Vec2 vector, double scalar)
+{
+    Vec2 returnVector;
+
+    returnVector.x = vector.x * scalar;
+    returnVector.y = vector.y * scalar;
+
+    return returnVector;
+}

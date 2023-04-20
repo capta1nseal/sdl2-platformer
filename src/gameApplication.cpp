@@ -9,8 +9,14 @@
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
+// class for 2D vectors and operations
+#include "vec2.cpp"
+
 // class for player, includes controls, physics and drawing
 #include "player.cpp"
+
+// class for camera positioning and scaling
+#include "camera.cpp"
 
 using namespace std;
 
@@ -27,6 +33,7 @@ public:
     {
         initializeSdl();
         initializePlayer();
+        initializeCamera();
     }
 
     void run()
@@ -104,6 +111,8 @@ private:
 
     int physicsSubsteps = 10;
 
+    Camera camera;
+
     void initializeSdl()
     {
         SDL_Init(SDL_INIT_EVERYTHING);
@@ -129,6 +138,9 @@ private:
     }
 
     void initializePlayer()
+    {}
+
+    void initializeCamera()
     {}
 
     void handleEvents()
@@ -173,6 +185,8 @@ private:
     void tick(double delta)
     {
         player.tick(delta);
+        camera.setTarget(player.getPosition());
+        camera.tick(delta);
     }
 
     void draw()

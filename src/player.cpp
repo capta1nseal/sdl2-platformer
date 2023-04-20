@@ -7,21 +7,8 @@
 // drawing and collision rect
 #include <SDL2/SDL.h>
 
-// storing 2D vector quantities
-#include "vec2.cpp"
-
 using namespace std;
 
-
-Vec2 scaleVec2(Vec2 vector, double scalar)
-{
-    Vec2 returnVector;
-
-    returnVector.x = vector.x * scalar;
-    returnVector.y = vector.y * scalar;
-
-    return returnVector;
-}
 
 class Player
 {
@@ -33,7 +20,7 @@ class Player
             walkAcceleration = 5000;
             jumpVelocity = 1000;
 
-            jumpBonus = 30.0;
+            jumpBonus = 20.0;
             airControl = 0.1;
 
             airResistance = 0.0005;
@@ -92,16 +79,16 @@ class Player
 
             acceleration.zero();
 
-            previousPosition.setEqual(position);
+            previousPosition.set(position);
 
             position.add(scaleVec2(velocity, delta));
 
             onGround = false;
 
-            if (position.y > 1200 - hitbox.w)
+            if (position.y > 1080 - hitbox.w)
             {
                 velocity.y = 0.0;
-                position.y = 1200.0 - hitbox.w;
+                position.y = 1080.0 - hitbox.w;
                 onGround = true;
             }
 
@@ -113,6 +100,12 @@ class Player
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             SDL_RenderFillRect(renderer, &hitbox);
         }
+
+        Vec2 getPosition()
+        {
+            return position;
+        }
+
     private:
         Vec2 position;
         Vec2 previousPosition;
