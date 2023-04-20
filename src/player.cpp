@@ -33,8 +33,8 @@ class Player
             walkAcceleration = 5000;
             jumpVelocity = 1000;
 
-            jumpBonus = 50.0;
-            airControl = 0.05;
+            jumpBonus = 30.0;
+            airControl = 0.1;
 
             airResistance = 0.0005;
             surfaceFriction = 0.01;
@@ -100,7 +100,6 @@ class Player
 
             if (position.y > 1200 - hitbox.w)
             {
-                velocity.x *= 1 - velocity.y * 0.0005;
                 velocity.y = 0.0;
                 position.y = 1200.0 - hitbox.w;
                 onGround = true;
