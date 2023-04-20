@@ -28,15 +28,15 @@ class Player
     public:
         Player()
         {
-            gravityVector.y = 2500;
+            gravityVector.y = 4000;
 
-            walkAcceleration = 5000;
+            walkAcceleration = 4000;
             jumpVelocity = 1000;
 
             jumpBonus = 30.0;
             airControl = 0.1;
 
-            airResistance = 0.0005;
+            airResistance = 0.0002;
             surfaceFriction = 0.01;
 
 
@@ -44,6 +44,7 @@ class Player
             hitbox.h = 32;
             updateHitboxPosition();
 
+            landing = false;
             onGround = true;
             jumping = false;
         }
@@ -120,6 +121,7 @@ class Player
         Vec2 acceleration;
         Vec2 gravityVector;
 
+        bool landing;
         bool onGround;
         bool jumping;
 

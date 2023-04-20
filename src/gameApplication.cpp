@@ -14,10 +14,12 @@
 
 using namespace std;
 
+
 chrono::_V2::steady_clock::time_point now()
 {
     return chrono::steady_clock::now();
 }
+
 
 class Game
 {
