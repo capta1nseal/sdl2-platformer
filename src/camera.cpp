@@ -2,17 +2,7 @@
 
 #include <chrono> // time delta
 
-#include "vec2.cpp" // 2D vector values
-
 using namespace std;
-
-Vec2 subtractVec2(Vec2 first, Vec2 second)
-{
-    Vec2 returnVector;
-    returnVector.x = first.x - second.x;
-    returnVector.y = first.y - second.y;
-    return returnVector;
-}
 
 class Camera
 {
@@ -24,6 +14,12 @@ public:
         approachQuotient = 0.25;
     }
 
+    void setPosition(Vec2 newPosition)
+    {
+        targetPosition.set(newPosition);
+        position.set(newPosition);
+    }
+
     void setTarget(Vec2 newTargetPosition)
     {
         targetPosition = newTargetPosition;
@@ -31,7 +27,8 @@ public:
 
     void tick(double delta)
     {
-        position.add(subtractVec2(targetPosition, position).scale(approachQuotient * delta));
+        position.add(scaleVec2(subtractVec2(targetPosition, position), approachQuotient * delta));
+        cout << "Camera position: (" << position.x << "," << position.y << ")" << endl;
     }
 
 private:
