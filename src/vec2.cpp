@@ -3,6 +3,14 @@ struct Vec2
     double x = 0.0;
     double y = 0.0;
 
+    Vec2()
+    {}
+
+    Vec2(double initialX, double initialY)
+      : x(initialX)
+      , y(initialY)
+    {}
+
     void zero()
     {
         x = 0.0;
@@ -28,11 +36,23 @@ struct Vec2
     }
 };
 
+Vec2 addVec2(Vec2 first, Vec2 second)
+{
+    Vec2 returnVector;
+
+    returnVector.x = first.x + second.x;
+    returnVector.y = first.y + second.y;
+
+    return returnVector;
+}
+
 Vec2 subtractVec2(Vec2 first, Vec2 second)
 {
     Vec2 returnVector;
+
     returnVector.x = first.x - second.x;
     returnVector.y = first.y - second.y;
+
     return returnVector;
 }
 

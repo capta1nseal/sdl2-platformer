@@ -11,7 +11,7 @@ public:
     {
         position.zero();
         scale = 1.0;
-        approachQuotient = 0.25;
+        approachQuotient = 2.0;
     }
 
     void setPosition(Vec2 newPosition)
@@ -35,5 +35,5 @@ private:
     Vec2 position; // centre of drawn region
     Vec2 targetPosition; // position to move camera to
     double scale; // pixel length / in-game length
-    double approachQuotient; // rate at which to approach the target position
+    double approachQuotient; // rate at which to approach the target position per second
 };

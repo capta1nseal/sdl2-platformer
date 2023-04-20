@@ -20,7 +20,7 @@ class Player
             walkAcceleration = 4000;
             jumpVelocity = 1000;
 
-            jumpBonus = 20.0;
+            jumpBonus = 5.0;
             airControl = 0.1;
 
             airResistance = 0.0002;
@@ -88,6 +88,7 @@ class Player
 
             if (position.y > 1080 - hitbox.w)
             {
+                // acceleration.x -= velocity.y * velocity.x * surfaceFriction;
                 velocity.y = 0.0;
                 position.y = 1080.0 - hitbox.w;
                 onGround = true;
@@ -99,12 +100,12 @@ class Player
         void draw(SDL_Renderer *renderer)
         {
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderFillRect(renderer, &hitbox);
+            SDL_RenderFillRectF(renderer, &hitbox);
         }
 
-        Vec2 getPosition()
+        Vec2 getCentre()
         {
-            return position;
+            return addVec2(position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
         }
 
     private:
@@ -127,13 +128,13 @@ class Player
         double airResistance;
         double surfaceFriction;
 
-        SDL_Rect hitbox;
+        SDL_FRect hitbox;
 
         array<bool, 7> inputArray;
 
         void updateHitboxPosition()
         {
-            hitbox.x = static_cast <int> (floor(position.x));
-            hitbox.y = static_cast <int> (floor(position.y));
+            hitbox.x = position.x;
+            hitbox.y = position.y;
         }
 };

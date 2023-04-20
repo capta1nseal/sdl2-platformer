@@ -69,10 +69,7 @@ public:
             }
             handleEvents();
 
-            for (int i = 0; i < physicsSubsteps; i++)
-            {
-                tick(delta.count() / (double) physicsSubsteps);
-            }
+            tick(delta.count());
 
             draw();
 
@@ -186,8 +183,12 @@ private:
 
     void tick(double delta)
     {
-        player.tick(delta);
-        camera.setTarget(player.getPosition());
+        for (int i = 0; i < physicsSubsteps; i++)
+        {
+            player.tick(delta / (double) physicsSubsteps);
+        }
+
+        camera.setTarget(player.getCentre());
         camera.tick(delta);
     }
 
