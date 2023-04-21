@@ -33,7 +33,6 @@ public:
     void tick(double delta)
     {
         position.add(scaleVec2(subtractVec2(targetPosition, position), approachQuotient * delta));
-        cout << "Camera position: (" << position.x << "," << position.y << ")" << endl;
     }
 
 private:

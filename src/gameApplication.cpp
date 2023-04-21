@@ -72,18 +72,6 @@ public:
             tick(delta.count());
 
             draw();
-
-            int accuracy = (int) ((targetRefreshTime.count() * 0.000001 - delta.count()) * 500000);
-            bool sign;
-            if (accuracy >= 0) sign = true;
-            else sign = false;
-            accuracy = abs(accuracy);
-            for (int i = 0; i < accuracy; i++)
-            {
-                cout << " ";
-            }
-            if (sign) cout << "+" << endl;
-            else cout << "-" << endl;
             
             this_thread::sleep_until(nextTime);
             delta = now() - start;
