@@ -1,24 +1,35 @@
-//debugging
+// debugging
 #include <iostream>
+
+// math. possibly unused.
 #include <cmath>
 
 // accurately timing the main loop execution
 #include <chrono>
 #include <thread>
 
+// input array
+#include <array>
+
+using namespace std;
+
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
+
+// class for holding and getting input state
+#include "input.cpp"
 
 // class for 2D vectors and operations
 #include "vec2.cpp"
 
-// class for player, includes controls, physics and drawing
-#include "player.cpp"
+// class for an axis-aligned bounding box collider
+#include "rectCollider.cpp"
 
 // class for camera positioning and scaling
 #include "camera.cpp"
 
-using namespace std;
+// class for player, includes controls, physics and drawing
+#include "player.cpp"
 
 
 chrono::_V2::steady_clock::time_point now()
@@ -34,6 +45,8 @@ public:
       : framerate(initialFramerate)
     {
         initializeSdl();
+        initializeInput();
+        initializeColliders();
         initializePlayer();
         initializeCamera();
     }
@@ -90,9 +103,10 @@ private:
 
     SDL_Event event;
     const Uint8 *keyboardState;
-    array<bool, 7> inputArray;
 
     int mouseX, mouseY;
+
+    Input input;
 
     Player player;
 
@@ -120,15 +134,29 @@ private:
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderClear(renderer);
 
-        for (int i = 0; i < 7; i++) inputArray[i] = false;
         keyboardState = SDL_GetKeyboardState(NULL);
     }
 
+    void initializeInput()
+    {
+        input.setKeyboardState(keyboardState);
+    }
+
+    void initializeColliders()
+    {
+        
+    }
+
     void initializePlayer()
-    {}
+    {
+        player.setInput(&input);
+    }
 
     void initializeCamera()
-    {}
+    {
+        camera.initializeResolution(displayWidth, displayHeight);
+        camera.setPosition(player.getCentre());
+    }
 
     void handleEvents()
     {
@@ -153,20 +181,9 @@ private:
 
         SDL_PumpEvents();
 
-        for (int i = 0; i < 7; i++) inputArray[i] = false;
+        input.updateInputs();
 
-        if (keyboardState[SDL_SCANCODE_UP]) inputArray[0] = true;
-        if (keyboardState[SDL_SCANCODE_RIGHT]) inputArray[1] = true;
-        if (keyboardState[SDL_SCANCODE_DOWN]) inputArray[2] = true;
-        if (keyboardState[SDL_SCANCODE_LEFT]) inputArray[3] = true;
-        if (keyboardState[SDL_SCANCODE_Z]) inputArray[4] = true;
-        if (keyboardState[SDL_SCANCODE_X]) inputArray[5] = true;
-        if (keyboardState[SDL_SCANCODE_C]) inputArray[6] = true;
-
-        if (SDL_GetMouseState(&mouseX, &mouseY))
-        {}
-
-        player.updateInputs(inputArray);
+        if (SDL_GetMouseState(&mouseX, &mouseY)) {}
     }
 
     void tick(double delta)
@@ -176,7 +193,7 @@ private:
             player.tick(delta / (double) physicsSubsteps);
         }
 
-        camera.setTarget(player.getCentre());
+        camera.setTargetPosition(player.getCentre());
         camera.tick(delta);
     }
 
@@ -187,7 +204,7 @@ private:
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(renderer, NULL);
 
-        player.draw(renderer);
+        player.draw(renderer, &camera);
 
         SDL_RenderPresent(renderer);
     }

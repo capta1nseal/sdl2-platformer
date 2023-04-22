@@ -1,15 +1,3 @@
-// debugging
-#include <iostream>
-
-// input array
-#include <array>
-
-// drawing and collision rect
-#include <SDL2/SDL.h>
-
-using namespace std;
-
-
 class Player
 {
     public:
@@ -35,30 +23,27 @@ class Player
             jumping = false;
         }
 
-        void updateInputs(array<bool, 7> newInputArray)
+        void setInput(Input *inputPtr)
         {
-            for (int i = 0; i < 7; i++)
-            {
-                inputArray[i] = newInputArray[i];
-            }
+            input = inputPtr;
         }
 
         void tick(double delta)
         {
             jumping = false;
-            if (inputArray[4] and onGround) // Z - jump
+            if (input->jumpPressed() and onGround) // Z - jump
             {
                 velocity.x *= jumpFriction;
                 velocity.y -= jumpVelocity;
                 jumping = true;
             }
-            if (inputArray[1]) // right arrow
+            if (input->rightPressed()) // right arrow
             {
                 if (jumping) acceleration.x += walkAcceleration * jumpBonus;
                 else if (onGround) acceleration.x += walkAcceleration;
                 else acceleration.x += walkAcceleration * airControl;
             }
-            if (inputArray[3]) // left arrow
+            if (input->leftPressed()) // left arrow
             {
                 if (jumping) acceleration.x -= walkAcceleration * jumpBonus;
                 else if (onGround) acceleration.x -= walkAcceleration;
@@ -88,7 +73,6 @@ class Player
 
             if (position.y > 1080 - hitbox.w)
             {
-                // acceleration.x -= velocity.y * velocity.x * surfaceFriction;
                 velocity.y = 0.0;
                 position.y = 1080.0 - hitbox.w;
                 onGround = true;
@@ -97,10 +81,16 @@ class Player
             updateHitboxPosition();
         }
 
-        void draw(SDL_Renderer *renderer)
+        void draw(SDL_Renderer *renderer, Camera *camera)
         {
+            Vec2 cameraPosition = camera->getPosition(); 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderFillRectF(renderer, &hitbox);
+            SDL_FRect drawRect;
+            drawRect.x = hitbox.x - cameraPosition.x;
+            drawRect.y = hitbox.y - cameraPosition.y;
+            drawRect.w = hitbox.w;
+            drawRect.h = hitbox.h;
+            SDL_RenderFillRectF(renderer, &drawRect);
         }
 
         Vec2 getCentre()
@@ -130,7 +120,7 @@ class Player
 
         SDL_FRect hitbox;
 
-        array<bool, 7> inputArray;
+        Input *input;
 
         void updateHitboxPosition()
         {

@@ -3,7 +3,7 @@ CFLAGS = -std=c++20 -O3
 LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image
 
 INFILE = src/main.cpp
-INCLUDES = src/gameApplication.cpp src/player.cpp src/camera.cpp src/vec2.cpp
+INCLUDES = src/gameApplication.cpp src/input.cpp src/vec2.cpp src/player.cpp src/camera.cpp src/rectCollider.cpp
 OUTFILE = bin/sdl2-platformer
 
 
