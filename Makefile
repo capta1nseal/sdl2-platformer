@@ -5,6 +5,8 @@ LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image
 INFILE = src/main.cpp
 INCLUDES = src/gameApplication.cpp src/input.cpp src/vec2.cpp src/player.cpp src/camera.cpp src/rectCollider.cpp
 OUTFILE = bin/sdl2-platformer
+INDATA = src/data
+OUTDATA = bin/data
 
 
 $(OUTFILE): $(INFILE) $(INCLUDES)
@@ -12,7 +14,8 @@ $(OUTFILE): $(INFILE) $(INCLUDES)
 	$(COMPILER) $(CFLAGS) -o $(OUTFILE) $(INFILE) $(LDFLAGS)
 
 build: $(OUTFILE)
-	cp -rf src/data bin
+	rm -rf $(OUTDATA)
+	cp -rf $(INDATA) bin/
 
 test: build
 	cd bin; ../$(OUTFILE)
@@ -20,8 +23,5 @@ test: build
 clean:
 	rm -rf bin/*
 
-update-assets:
-	rm -rf bin/data
-	cp -rf src/data bin/
 
-.PHONY: build test clean update-assets
+.PHONY: data build test clean
