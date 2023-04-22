@@ -19,6 +19,7 @@ class Player
 
             walkAcceleration = 4000;
             jumpVelocity = 1000;
+            jumpFriction = 0.85;
 
             jumpBonus = 5.0;
             airControl = 0.1;
@@ -26,13 +27,11 @@ class Player
             airResistance = 0.0002;
             surfaceFriction = 0.01;
 
-
             hitbox.w = 32;
             hitbox.h = 32;
             updateHitboxPosition();
 
-            landing = false;
-            onGround = true;
+            onGround = false;
             jumping = false;
         }
 
@@ -49,6 +48,7 @@ class Player
             jumping = false;
             if (inputArray[4] and onGround) // Z - jump
             {
+                velocity.x *= jumpFriction;
                 velocity.y -= jumpVelocity;
                 jumping = true;
             }
@@ -115,12 +115,12 @@ class Player
         Vec2 acceleration;
         Vec2 gravityVector;
 
-        bool landing;
         bool onGround;
         bool jumping;
 
         double walkAcceleration; 
         double jumpVelocity;
+        double jumpFriction;
 
         double jumpBonus;
         double airControl;

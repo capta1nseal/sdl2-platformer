@@ -25,6 +25,11 @@ public:
         return position;
     }
 
+    double getScale()
+    {
+        return scale;
+    }
+
     void setTarget(Vec2 newTargetPosition)
     {
         targetPosition = newTargetPosition;
