@@ -22,14 +22,14 @@ using namespace std;
 // class for 2D vectors and operations
 #include "vec2.cpp"
 
-// class for an axis-aligned bounding box collider
-#include "rectCollider.cpp"
-
 // class for camera positioning and scaling
 #include "camera.cpp"
 
 // class for player, includes controls, physics and drawing
 #include "player.cpp"
+
+// class for an axis-aligned bounding box collider
+#include "rectCollider.cpp"
 
 
 chrono::_V2::steady_clock::time_point now()
@@ -207,6 +207,14 @@ private:
         SDL_RenderFillRect(renderer, NULL);
 
         player.draw(renderer, &camera);
+
+        SDL_Rect centre;
+        centre.x = static_cast<int>(floor(displayWidth / 2.0) - 1);
+        centre.y = static_cast<int>(floor(displayHeight / 2.0) - 1);
+        centre.w = 2;
+        centre.h = 2;
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawRect(renderer, &centre);
 
         SDL_RenderPresent(renderer);
     }
