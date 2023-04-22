@@ -1,12 +1,24 @@
+double clamp(double n, double min, double max)
+{
+    if (n >= max) return max;
+    if (n <= min) return min;
+    return n;
+}
+
 class Camera
 {
 public:
     Camera()
     {
         position.zero();
-        scale = 1.0;
+        scale = 0.1;
+        targetScale = 1.0;
         positionApproachQuotient = 3.5;
-        scaleApproachQuotient = 1.0;
+        scaleApproachQuotient = 2.5;
+
+        zoomStep = 0.1;
+        minScale = 0.1;
+        maxScale = 10.0;
     }
 
     void initializeResolution(int initialDisplayWidth, int initialDisplayHeight)
@@ -55,8 +67,17 @@ public:
         return scale;
     }
 
+    Vec2 mapCoordinate(Vec2 coordinate)
+    {
+        return subtractVec2(coordinate, position);
+        // return subtractVec2(scaleVec2(coordinate, scale), position); // this line is incorrect when scale != 1, fix pls
+    }
+
     void tick(double delta)
     {
+        if (input->attackPressed()) zoomIn(delta);
+        if (input->dashPressed()) zoomOut(delta);
+
         position.add(scaleVec2(subtractVec2(targetPosition, position), positionApproachQuotient * delta));
         scale += (targetScale - scale) * scaleApproachQuotient * delta;
     }
@@ -66,10 +87,23 @@ private:
     int displayHeight; // height of display in pixels
     Vec2 position; // centre of drawn region
     Vec2 targetPosition; // position to move camera to
-    double positionApproachQuotient; // rate at which to approach the target position per second
     double scale; // pixel length / in-game length
     double targetScale; // scale to zoom to
     double scaleApproachQuotient; // rate at which to approach the target scale per second
+    double positionApproachQuotient; // rate at which to approach the target position per second
+    double zoomStep;
+    double minScale;
+    double maxScale;
 
     Input *input; // pointer to input object
+
+    void zoomIn(double delta)
+    {
+        targetScale = clamp(scale + zoomStep, minScale, maxScale);
+    }
+
+    void zoomOut(double delta)
+    {
+        targetScale = clamp(scale - zoomStep, minScale, maxScale);
+    }
 };

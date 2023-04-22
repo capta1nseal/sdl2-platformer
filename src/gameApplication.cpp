@@ -154,6 +154,8 @@ private:
 
     void initializeCamera()
     {
+        camera.setInput(&input);
+
         camera.initializeResolution(displayWidth, displayHeight);
         camera.setPosition(player.getCentre());
     }

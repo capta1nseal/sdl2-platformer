@@ -30,13 +30,12 @@ class Player
 
         void tick(double delta)
         {
-            jumping = false;
             if (input->jumpPressed() and onGround) // Z - jump
             {
                 velocity.x *= jumpFriction;
                 velocity.y -= jumpVelocity;
                 jumping = true;
-            }
+            } else jumping = false;
             if (input->rightPressed()) // right arrow
             {
                 if (jumping) acceleration.x += walkAcceleration * jumpBonus;
@@ -83,13 +82,14 @@ class Player
 
         void draw(SDL_Renderer *renderer, Camera *camera)
         {
-            Vec2 cameraPosition = camera->getPosition(); 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             SDL_FRect drawRect;
-            drawRect.x = hitbox.x - cameraPosition.x;
-            drawRect.y = hitbox.y - cameraPosition.y;
-            drawRect.w = hitbox.w;
-            drawRect.h = hitbox.h;
+            Vec2 drawPosition = camera->mapCoordinate(position);
+            double drawScale = camera->getScale();
+            drawRect.x = drawPosition.x;
+            drawRect.y = drawPosition.y;
+            drawRect.w = hitbox.w * drawScale;
+            drawRect.h = hitbox.h * drawScale;
             SDL_RenderFillRectF(renderer, &drawRect);
         }
 
