@@ -6,8 +6,9 @@ public:
         position.zero();
         scale = 0.1;
         targetScale = 1.0;
-        positionApproachQuotient = 3.5;
-        scaleApproachQuotient = 2.5;
+        positionApproachQuotient = 5.0;
+        baseScaleApproachQuotient = 2.5;
+        scaleApproachQuotient = baseScaleApproachQuotient;
 
         zoomFactor = 5.0;
         minScale = 0.1;
@@ -80,6 +81,7 @@ private:
     Vec2 targetPosition; // position to move camera to
     double scale; // pixel length / in-game length
     double targetScale; // scale to zoom to
+    double baseScaleApproachQuotient; // base rate to approach target scale, modified by eg. speed of movement
     double scaleApproachQuotient; // rate at which to approach the target scale per second
     double positionApproachQuotient; // rate at which to approach the target position per second
     double zoomFactor;

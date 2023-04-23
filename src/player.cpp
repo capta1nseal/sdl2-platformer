@@ -12,11 +12,14 @@ class Player
             jumpBonus = 5.0;
             airControl = 0.1;
 
-            airResistance = 0.1;
+            airResistance = 0.2;
             surfaceFriction = 5.0;
 
-            hitbox.w = 32;
-            hitbox.h = 32;
+            playerWidth = 32;
+            playerHeight = 32;
+
+            hitbox.w = playerWidth + 2;
+            hitbox.h = playerHeight + 2;
             updateHitboxPosition();
 
             onGround = false;
@@ -70,6 +73,8 @@ class Player
 
             onGround = false;
 
+            updateHitboxPosition();
+
             collideRect(level->getTestCollider());
 
             /*
@@ -100,8 +105,8 @@ class Player
             double drawScale = camera->getScale();
             drawRect.x = drawPosition.x;
             drawRect.y = drawPosition.y;
-            drawRect.w = hitbox.w * drawScale;
-            drawRect.h = hitbox.h * drawScale;
+            drawRect.w = playerWidth * drawScale;
+            drawRect.h = playerHeight * drawScale;
             SDL_RenderFillRectF(renderer, &drawRect);
         }
 
@@ -130,6 +135,9 @@ class Player
         double airResistance;
         double surfaceFriction;
 
+        int playerWidth = 32;
+        int playerHeight = 32;
+
         SDL_Rect hitbox;
         SDL_Rect collisionRect;
 
@@ -137,39 +145,43 @@ class Player
 
         void updateHitboxPosition()
         {
-            hitbox.x = position.x;
-            hitbox.y = position.y;
+            hitbox.x = position.x - 1;
+            hitbox.y = position.y - 1;
         }
 
         void collideRect(SDL_Rect *rect)
         {
             if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
             {
-                if (abs(velocity.y * collisionRect.w) >= abs(velocity.x * collisionRect.h))
+                if (abs((collisionRect.w - 1)) >= abs((collisionRect.h - 1)))
                 {
-                    velocity.y = 0;
-                    if (velocity.y >= 0)
+                    if (velocity.y == 0) {}
+                    else if (velocity.y > 0)
                     {
-                        position.y -= collisionRect.h;
+                        position.y = rect->y - playerHeight;
                         onGround = true;
                     }
                     else
                     {
-                        position.y += collisionRect.h;
+                        position.y = rect->y + rect->h;
                     }
+                    velocity.y = 0.0;
                 }
                 else
                 {
-                    velocity.x = 0;
-                    if (velocity.x >= 0)
+                    if (velocity.x == 0) {}
+                    else if (velocity.x > 0)
                     {
-                        position.x -= collisionRect.w;
+                        position.x = rect->x - playerWidth;
                     }
                     else
                     {
-                        position.x += collisionRect.w;
+                        position.x = rect->x + rect->w;
                     }
+                    velocity.x = 0.0;
+                    
                 }
+                updateHitboxPosition();
             }
         }
 };
