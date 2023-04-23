@@ -2,21 +2,27 @@ class Level
 {
 public:
     Level()
-    {
-        testCollider = RectCollider(-100, 500, 200, 50);
-    }
+    {}
 
     Level(const char *loadPath)
       : path(loadPath)
-    {
-        testCollider = RectCollider(-100, 500, 200, 50);
-    }
+    {}
 
     void drawColliders(SDL_Renderer *renderer, Camera *camera)
     {
-        testCollider.draw(renderer, camera);
+        colliders.draw(renderer, camera);
+    }
+
+    vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
+    {
+        return colliders.getOverlappedColliders(rect);
+    }
+
+    SDL_Rect *getTestCollider()
+    {
+        return colliders.getTestCollider();
     }
 private:
     const char *path;
-    RectCollider testCollider;
+    ColliderGroup colliders;
 };

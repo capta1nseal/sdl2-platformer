@@ -28,7 +28,7 @@ class Player
             input = inputPtr;
         }
 
-        void tick(double delta)
+        void tick(double delta, Level *level)
         {
             if (input->jumpPressed() and onGround) // Z - jump
             {
@@ -70,12 +70,24 @@ class Player
 
             onGround = false;
 
+            collideRect(level->getTestCollider());
+
+            /*
+            vector<SDL_Rect *> collideRects = level->getOverlappedColliders(&hitbox);
+            for (int i = collideRects.size(); i > 0; i--)
+            {
+                collideRect(collideRects[i]);
+            }
+            */
+
+            /*
             if (position.y > 500 - hitbox.w)
             {
                 velocity.y = 0.0;
                 position.y = 500.0 - hitbox.w;
                 onGround = true;
             }
+            */
 
             updateHitboxPosition();
         }
@@ -133,16 +145,17 @@ class Player
         {
             if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
             {
-                if (abs(collisionRect.y * velocity.y) >= abs(collisionRect.x * velocity.x))
+                if (abs(velocity.y * collisionRect.w) >= abs(velocity.x * collisionRect.h))
                 {
                     velocity.y = 0;
                     if (velocity.y >= 0)
                     {
-                        position.y -= collisionRect.y;
+                        position.y -= collisionRect.h;
+                        onGround = true;
                     }
                     else
                     {
-                        position.y += collisionRect.x;
+                        position.y += collisionRect.h;
                     }
                 }
                 else
@@ -150,11 +163,11 @@ class Player
                     velocity.x = 0;
                     if (velocity.x >= 0)
                     {
-                        position.x -= collisionRect.x;
+                        position.x -= collisionRect.w;
                     }
                     else
                     {
-                        position.x += collisionRect.x;
+                        position.x += collisionRect.w;
                     }
                 }
             }

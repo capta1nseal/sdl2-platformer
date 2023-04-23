@@ -31,9 +31,6 @@ using namespace std;
 // class for camera positioning and scaling
 #include "camera.cpp"
 
-// class for player, includes controls, physics and drawing
-#include "player.cpp"
-
 // class for an axis-aligned bounding box collider
 #include "rectCollider.cpp"
 
@@ -42,6 +39,10 @@ using namespace std;
 
 // class for storing a level's colliders and art during runtime
 #include "level.cpp"
+
+// class for player, includes controls, physics and drawing
+#include "player.cpp"
+
 
 
 chrono::_V2::steady_clock::time_point now()
@@ -206,7 +207,7 @@ private:
     {
         for (int i = 0; i < physicsSubsteps; i++)
         {
-            player.tick(delta / (double) physicsSubsteps);
+            player.tick(delta / (double) physicsSubsteps, &level);
         }
 
         camera.setTargetPosition(player.getCentre());
