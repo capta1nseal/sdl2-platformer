@@ -11,10 +11,13 @@
 // input array
 #include <array>
 
-using namespace std;
+// grouping colliders
+#include <vector>
 
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
+
+using namespace std;
 
 // some useful mathematical functions
 #include "math.cpp"
@@ -34,6 +37,12 @@ using namespace std;
 // class for an axis-aligned bounding box collider
 #include "rectCollider.cpp"
 
+// class for grouping and interacting with colliders
+#include "colliderGroup.cpp"
+
+// class for storing a level's colliders and art during runtime
+#include "level.cpp"
+
 
 chrono::_V2::steady_clock::time_point now()
 {
@@ -49,7 +58,7 @@ public:
     {
         initializeSdl();
         initializeInput();
-        initializeColliders();
+        initializeLevel();
         initializePlayer();
         initializeCamera();
     }
@@ -117,6 +126,8 @@ private:
 
     Camera camera;
 
+    Level level;
+
     void initializeSdl()
     {
         SDL_Init(SDL_INIT_EVERYTHING);
@@ -145,9 +156,9 @@ private:
         input.setKeyboardState(keyboardState);
     }
 
-    void initializeColliders()
+    void initializeLevel()
     {
-        
+        level = Level("data/levels/0");
     }
 
     void initializePlayer()
@@ -209,15 +220,9 @@ private:
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(renderer, NULL);
 
-        player.draw(renderer, &camera);
+        level.drawColliders(renderer, &camera);
 
-        SDL_Rect centre;
-        centre.x = static_cast<int>(floor(displayWidth / 2.0) - 1);
-        centre.y = static_cast<int>(floor(displayHeight / 2.0) - 1);
-        centre.w = 2;
-        centre.h = 2;
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderDrawRect(renderer, &centre);
+        player.draw(renderer, &camera);
 
         SDL_RenderPresent(renderer);
     }
