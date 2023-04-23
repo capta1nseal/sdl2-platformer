@@ -21,8 +21,8 @@ public:
         if (keyboardState[SDL_SCANCODE_Z]) inputArray[4] = true;
         if (keyboardState[SDL_SCANCODE_X]) inputArray[5] = true;
         if (keyboardState[SDL_SCANCODE_C]) inputArray[6] = true;
-        if (keyboardState[SDL_SCANCODE_KP_PLUS]) inputArray[7] = true;
-        if (keyboardState[SDL_SCANCODE_KP_MINUS]) inputArray[8] = true;
+        if (keyboardState[45]) inputArray[7] = true;
+        if (keyboardState[56]) inputArray[8] = true;
     }
 
     bool upPressed() {return inputArray[0];}

@@ -16,11 +16,14 @@ using namespace std;
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
-// class for holding and getting input state
-#include "input.cpp"
+// some useful mathematical functions
+#include "math.cpp"
 
 // class for 2D vectors and operations
 #include "vec2.cpp"
+
+// class for holding and getting input state
+#include "input.cpp"
 
 // class for camera positioning and scaling
 #include "camera.cpp"

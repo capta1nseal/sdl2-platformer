@@ -1,10 +1,3 @@
-double clamp(double n, double min, double max)
-{
-    if (n >= max) return max;
-    if (n <= min) return min;
-    return n;
-}
-
 class Camera
 {
 public:
@@ -16,7 +9,7 @@ public:
         positionApproachQuotient = 3.5;
         scaleApproachQuotient = 2.5;
 
-        zoomFactor = 1.1;
+        zoomFactor = 5.0;
         minScale = 0.1;
         maxScale = 10.0;
     }
@@ -73,8 +66,8 @@ public:
 
     void tick(double delta)
     {
-        if (input->attackPressed()) zoomIn(delta);
-        if (input->dashPressed()) zoomOut(delta);
+        if (input->zoomInPressed()) zoomIn(delta);
+        if (input->zoomOutPressed()) zoomOut(delta);
 
         position.add(scaleVec2(subtractVec2(targetPosition, position), positionApproachQuotient * delta));
         scale += (targetScale - scale) * scaleApproachQuotient * delta;
@@ -97,11 +90,11 @@ private:
 
     void zoomIn(double delta)
     {
-        targetScale = clamp(targetScale * zoomFactor, minScale, maxScale);
+        targetScale = clamp(targetScale + zoomFactor * delta, minScale, maxScale);
     }
 
     void zoomOut(double delta)
     {
-        targetScale = clamp(targetScale / zoomFactor, minScale, maxScale);
+        targetScale = clamp(targetScale - zoomFactor * delta, minScale, maxScale);
     }
 };
