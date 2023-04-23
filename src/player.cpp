@@ -12,8 +12,8 @@ class Player
             jumpBonus = 5.0;
             airControl = 0.1;
 
-            airResistance = 0.05;
-            surfaceFriction = 2.5;
+            airResistance = 0.1;
+            surfaceFriction = 5.0;
 
             hitbox.w = 32;
             hitbox.h = 32;
