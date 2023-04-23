@@ -1,11 +1,18 @@
 # sdl2-2d-game
 
-A fun little free-time project to develop my c++ and game design skills
+A simple 2D game engine created from a minimal codebase in c++
 
 ## Authors and acknowledgment
 
 Created by Aidan Walker
+
 Thanks to SDL2's devs, it handles the hardware and lets the developer focus on everything else (plus it has some good simple features for games)
+
+## Building
+
+- To build this project, you will need SDL2 development libraries, and (possibly,  not yet implemented) nlohmann/json somewhere on your include path.
+- If you're on linux and have the requisite libraries, just run "make build" from the root of the project to build
+- Building on windows is not yet implemented but should be very simple, as no platform-dependent libraries or programs are used
 
 ## License
 
@@ -19,18 +26,13 @@ The project is very WIP - for example, no art is being drawn yet, there is no le
 
 ### Features
 
+Current:
 - player with realistic movement physics simulation
 - camera that follows the player and has an adjustable level of zoom
 - collider objects (WIP)
 - very tight execution (within microseconds of perfect deltas on stable systems)
 
-- Planned:
+Planned:
 - art
 - easy-to-use level editor with features like parallax art layers and pixel-perfect asset placement
 - multiple levels
-
-#### What I've learned
-- Before starting this project, I kinda knew what pointers are and had passed them around to third party libraries, for example, but had never implemented any code of my own that made use of them. This is mostly due to being lazy and sticking with python for too long. Now no objects of notable size are passed in functions, and pointers are used instead.
-- How to use decomposition in practice to split the project into reasonably-sized pieces
-- Making the physics simulation function with realistic properties and variable time deltas has been a nice challenge
-- Getting the execution to run with accurate timings wasn't as simple as expected
