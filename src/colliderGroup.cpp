@@ -5,7 +5,7 @@ public:
     {
         colliderCount = 1;
         colliders.reserve(colliderCount);
-        colliders[0] = RectCollider(-5000, 1000, 10000, 100);
+        colliders[0] = RectCollider(-1000, 1000, 2000, 10000);
     }
 
     vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
