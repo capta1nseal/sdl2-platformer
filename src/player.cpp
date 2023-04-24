@@ -3,7 +3,6 @@ class Player
 public:
     Player()
     {
-        gravityVector.x = 500;
         gravityVector.y = 4000;
 
         walkAcceleration = 4000;
