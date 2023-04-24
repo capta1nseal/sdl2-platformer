@@ -7,10 +7,9 @@ public:
         scale = 0.1;
         targetScale = 1.0;
         positionApproachQuotient = 5.0;
-        baseScaleApproachQuotient = 2.5;
-        scaleApproachQuotient = baseScaleApproachQuotient;
+        scaleApproachQuotient = 2.5;
 
-        zoomFactor = 5.0;
+        zoomFactor = 2.5;
         minScale = 0.1;
         maxScale = 10.0;
     }
@@ -79,24 +78,24 @@ private:
     int displayHeight; // height of display in pixels
     Vec2 position; // centre of drawn region
     Vec2 targetPosition; // position to move camera to
-    double scale; // pixel length / in-game length
+    double scale; // screenspace length / ingame length
     double targetScale; // scale to zoom to
-    double baseScaleApproachQuotient; // base rate to approach target scale, modified by eg. speed of movement
     double scaleApproachQuotient; // rate at which to approach the target scale per second
     double positionApproachQuotient; // rate at which to approach the target position per second
-    double zoomFactor;
-    double minScale;
-    double maxScale;
+    double velocityZoomOut; // amount velocity makes the camera zoom out
+    double zoomFactor; // rate at which zoom keys zoom
+    double minScale; // minimum scale that can be zoomed out to
+    double maxScale; // maximum scale that can be zoomed in to
 
     Input *input; // pointer to input object
 
     void zoomIn(double delta)
     {
-        targetScale = clamp(targetScale + zoomFactor * delta, minScale, maxScale);
+        targetScale = clamp(targetScale * (1 + (zoomFactor - 1) * delta), minScale, maxScale);
     }
 
     void zoomOut(double delta)
     {
-        targetScale = clamp(targetScale - zoomFactor * delta, minScale, maxScale);
+        targetScale = clamp(targetScale / (1 + (zoomFactor - 1) * delta), minScale, maxScale);
     }
 };

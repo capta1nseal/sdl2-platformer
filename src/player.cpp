@@ -153,7 +153,7 @@ class Player
         {
             if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
             {
-                if (abs((collisionRect.w - 1)) >= abs((collisionRect.h - 1)))
+                if (collisionRect.w >= collisionRect.h)
                 {
                     if (velocity.y == 0) {}
                     else if (velocity.y > 0)

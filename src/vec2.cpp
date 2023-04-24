@@ -34,6 +34,11 @@ struct Vec2
         x *= scalar;
         y *= scalar;
     }
+
+    double magnitude()
+    {
+        return sqrt(x * x + y * y);
+    }
 };
 
 Vec2 addVec2(Vec2 first, Vec2 second)
