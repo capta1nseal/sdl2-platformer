@@ -12,7 +12,7 @@ public:
         jumpBonus = 5.0;
         airControl = 0.1;
 
-        airResistance = 0.2;
+        airResistance = 0.0;
         surfaceFriction = 5.0;
 
         playerWidth = 32;
