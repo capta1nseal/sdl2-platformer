@@ -43,19 +43,16 @@ using namespace std;
 // class for player, includes controls, physics and drawing
 #include "player.cpp"
 
-
-
 chrono::_V2::steady_clock::time_point now()
 {
     return chrono::steady_clock::now();
 }
 
-
 class Game
 {
 public:
     Game(double initialFramerate = 60.0)
-      : framerate(initialFramerate)
+        : framerate(initialFramerate)
     {
         initializeSdl();
         initializeInput();
@@ -72,13 +69,13 @@ public:
         chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> start;
         chrono::duration<double, micro> waitPeriod = targetRefreshTime;
         chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> nextTime;
-        
+
         chrono::duration<double> delta;
 
-        const int tuningIterations = (int) floor(framerate);
+        const int tuningIterations = (int)floor(framerate);
         int tuningIterator = 0;
         auto tuningPeriodStart = now();
- 
+
         running = true;
         draw();
         while (running)
@@ -98,7 +95,7 @@ public:
             tick(delta.count());
 
             draw();
-            
+
             this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
@@ -200,14 +197,16 @@ private:
 
         input.updateInputs();
 
-        if (SDL_GetMouseState(&mouseX, &mouseY)) {}
+        if (SDL_GetMouseState(&mouseX, &mouseY))
+        {
+        }
     }
 
     void tick(double delta)
     {
         for (int i = 0; i < physicsSubsteps; i++)
         {
-            player.tick(delta / (double) physicsSubsteps, &level);
+            player.tick(delta / (double)physicsSubsteps, &level);
         }
 
         camera.setTargetPosition(player.getCentre());

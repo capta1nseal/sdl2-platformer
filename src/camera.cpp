@@ -59,33 +59,35 @@ public:
     Vec2 mapCoordinate(Vec2 coordinate)
     {
         return addVec2(
-            Vec2(displayWidth / 2.0, displayHeight / 2.0), // vector to centre of screen / camera, same diff innit
+            Vec2(displayWidth / 2.0, displayHeight / 2.0),       // vector to centre of screen / camera, same diff innit
             scaleVec2(subtractVec2(coordinate, position), scale) // vector from centre to coordinate scaled by scale
-        ); // which added together make the vector from the top-left corner to the screen-space position of the coordinate
+        );                                                       // which added together make the vector from the top-left corner to the screen-space position of the coordinate
     }
 
     void tick(double delta)
     {
-        if (input->zoomInPressed()) zoomIn(delta);
-        if (input->zoomOutPressed()) zoomOut(delta);
+        if (input->zoomInPressed())
+            zoomIn(delta);
+        if (input->zoomOutPressed())
+            zoomOut(delta);
 
         position.add(scaleVec2(subtractVec2(targetPosition, position), positionApproachQuotient * delta));
         scale += (targetScale - scale) * scaleApproachQuotient * delta;
     }
 
 private:
-    int displayWidth; // width of display in pixels
-    int displayHeight; // height of display in pixels
-    Vec2 position; // centre of drawn region
-    Vec2 targetPosition; // position to move camera to
-    double scale; // screenspace length / ingame length
-    double targetScale; // scale to zoom to
-    double scaleApproachQuotient; // rate at which to approach the target scale per second
+    int displayWidth;                // width of display in pixels
+    int displayHeight;               // height of display in pixels
+    Vec2 position;                   // centre of drawn region
+    Vec2 targetPosition;             // position to move camera to
+    double scale;                    // screenspace length / ingame length
+    double targetScale;              // scale to zoom to
+    double scaleApproachQuotient;    // rate at which to approach the target scale per second
     double positionApproachQuotient; // rate at which to approach the target position per second
-    double velocityZoomOut; // amount velocity makes the camera zoom out
-    double zoomFactor; // rate at which zoom keys zoom
-    double minScale; // minimum scale that can be zoomed out to
-    double maxScale; // maximum scale that can be zoomed in to
+    double velocityZoomOut;          // amount velocity makes the camera zoom out
+    double zoomFactor;               // rate at which zoom keys zoom
+    double minScale;                 // minimum scale that can be zoomed out to
+    double maxScale;                 // maximum scale that can be zoomed in to
 
     Input *input; // pointer to input object
 

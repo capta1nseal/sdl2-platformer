@@ -4,12 +4,13 @@ struct Vec2
     double y = 0.0;
 
     Vec2()
-    {}
+    {
+    }
 
     Vec2(double initialX, double initialY)
-      : x(initialX)
-      , y(initialY)
-    {}
+        : x(initialX), y(initialY)
+    {
+    }
 
     void zero()
     {

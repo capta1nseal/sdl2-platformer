@@ -2,11 +2,13 @@ class Level
 {
 public:
     Level()
-    {}
+    {
+    }
 
     Level(const char *loadPath)
-      : path(loadPath)
-    {}
+        : path(loadPath)
+    {
+    }
 
     void drawColliders(SDL_Renderer *renderer, Camera *camera)
     {
@@ -22,6 +24,7 @@ public:
     {
         return colliders.getTestCollider();
     }
+
 private:
     const char *path;
     ColliderGroup colliders;
