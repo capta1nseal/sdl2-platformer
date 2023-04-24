@@ -120,7 +120,7 @@ private:
 
     Player player;
 
-    int physicsSubsteps = 10000;
+    int physicsSubsteps = 100; // to make up for inaccurate modelling on lower deltas
 
     Camera camera;
 
