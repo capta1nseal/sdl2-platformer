@@ -120,7 +120,7 @@ private:
 
     Player player;
 
-    int physicsSubsteps = 10;
+    int physicsSubsteps = 10000;
 
     Camera camera;
 
