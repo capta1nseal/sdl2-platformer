@@ -60,9 +60,9 @@ public:
                 acceleration.x -= walkAcceleration * airControl;
         }
 
-        acceleration.add(gravityVector);
+        acceleration.add(&gravityVector);
 
-        acceleration.add(scaleVec2(velocity, -1 * airResistance));
+        acceleration.subtract(scaleVec2(&velocity, airResistance));
 
         if (onGround)
         {
@@ -71,20 +71,16 @@ public:
 
         acceleration.scale(delta);
 
-        velocity.add(acceleration);
+        velocity.add(&acceleration);
 
         acceleration.zero();
 
-        previousPosition.set(position);
+        previousPosition.set(&position);
 
-        position.add(scaleVec2(velocity, delta));
-
-        onGround = false;
-
+        position.add(scaleVec2(&velocity, delta));
         updateHitboxPosition();
 
-        // collideRect(level->getTestCollider());
-
+        onGround = false;
         
         vector<SDL_FRect *> collideRects = level->getOverlappedColliders(&hitbox);
         for (int i = 0; i < collideRects.size(); i++)
@@ -99,8 +95,7 @@ public:
     void draw(SDL_Renderer *renderer, Camera *camera)
     {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_FRect drawRect;
-        Vec2 drawPosition = camera->mapCoordinate(position);
+        drawPosition.set(camera->mapCoordinate(&position));
         double drawScale = camera->getScale();
         drawRect.x = drawPosition.x;
         drawRect.y = drawPosition.y;
@@ -111,7 +106,7 @@ public:
 
     Vec2 getCentre()
     {
-        return addVec2(position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
+        return addVec2(&position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
     }
 
 private:
@@ -141,6 +136,9 @@ private:
     SDL_FRect collisionRect;
 
     Input *input;
+
+    Vec2 drawPosition;
+    SDL_FRect drawRect;
 
     void updateHitboxPosition()
     {

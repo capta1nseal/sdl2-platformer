@@ -3,7 +3,6 @@ class Camera
 public:
     Camera()
     {
-        position.zero();
         scale = 0.1;
         targetScale = 1.0;
         positionApproachQuotient = 5.0;
@@ -18,6 +17,7 @@ public:
     {
         displayWidth = initialDisplayWidth;
         displayHeight = initialDisplayHeight;
+        centreVector = Vec2(static_cast<double>(displayWidth) / 2.0, static_cast<double>(displayHeight) / 2.0);
     }
 
     void setInput(Input *inputPtr)
@@ -27,18 +27,18 @@ public:
 
     void setPosition(Vec2 newPosition)
     {
-        targetPosition.set(newPosition);
-        position.set(newPosition);
+        targetPosition.set(&newPosition);
+        position.set(&newPosition);
     }
 
     void setTargetPosition(Vec2 newTargetPosition)
     {
-        targetPosition = newTargetPosition;
+        targetPosition.set(&newTargetPosition);
     }
 
-    Vec2 getPosition()
+    Vec2 *getPosition()
     {
-        return position;
+        return &position;
     }
 
     void setScale(double newScale)
@@ -59,9 +59,16 @@ public:
     Vec2 mapCoordinate(Vec2 coordinate)
     {
         return addVec2(
-            Vec2(displayWidth / 2.0, displayHeight / 2.0),       // vector to centre of screen / camera, same diff innit
-            scaleVec2(subtractVec2(coordinate, position), scale) // vector from centre to coordinate scaled by scale
-        );                                                       // which added together make the vector from the top-left corner to the screen-space position of the coordinate
+            &centreVector,
+            scaleVec2(subtractVec2(&coordinate, &position), scale)
+        );
+    }
+    Vec2 mapCoordinate(Vec2 *coordinate)
+    {
+        return addVec2(
+            &centreVector,
+            scaleVec2(subtractVec2(coordinate, &position), scale)
+        );
     }
 
     void tick(double delta)
@@ -78,6 +85,7 @@ public:
 private:
     int displayWidth;                // width of display in pixels
     int displayHeight;               // height of display in pixels
+    Vec2 centreVector;               // vector from top left to centre of screen
     Vec2 position;                   // centre of drawn region
     Vec2 targetPosition;             // position to move camera to
     double scale;                    // screenspace length / ingame length

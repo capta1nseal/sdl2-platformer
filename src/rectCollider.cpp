@@ -38,8 +38,7 @@ public:
     void draw(SDL_Renderer *renderer, Camera* camera)
     {
         SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
-        SDL_FRect drawRect;
-        Vec2 drawPosition = camera->mapCoordinate(Vec2(hitbox.x, hitbox.y));
+        drawPosition.set(camera->mapCoordinate(Vec2(hitbox.x, hitbox.y)));
         double drawScale = camera->getScale();
         drawRect.x = drawPosition.x;
         drawRect.y = drawPosition.y;
@@ -49,5 +48,7 @@ public:
     }
 private:
     SDL_FRect hitbox;
+    Vec2 drawPosition;
+    SDL_FRect drawRect;
     SDL_Colour colour;
 };

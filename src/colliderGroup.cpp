@@ -3,17 +3,22 @@ class ColliderGroup
 public:
     ColliderGroup()
     {
-        colliderCount = 100;
+        colliderCount = 100 * 5;
         colliders.reserve(colliderCount);
         int x = -500;
         int y = 1000;
         int w = 1000;
         int h = 100;
-        for (int i = 0; i < colliderCount; i++)
+        for (int j = 0; j < 5; j++)
         {
-            colliders.push_back(RectCollider(x, y, w, h));
-            x += 1100;
-            y -= 75;
+            x = -500;
+            y = 1000 + j * 200;
+            for (int i = 0; i < 100; i++)
+            {
+                colliders.push_back(RectCollider(x, y, w, h));
+                x += 1100;
+                y -= 100;
+            }
         }
         cout << colliderCount << endl << colliders.size() << endl;
     }
