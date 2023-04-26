@@ -3,13 +3,13 @@ class ColliderGroup
 public:
     ColliderGroup()
     {
-        colliderCount = 100 * 5;
+        colliderCount = 100 * 100;
         colliders.reserve(colliderCount);
         int x = -500;
         int y = 1000;
         int w = 1000;
         int h = 100;
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 100; j++)
         {
             x = -500;
             y = 1000 + j * 200;
