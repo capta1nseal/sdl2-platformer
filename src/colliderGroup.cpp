@@ -8,7 +8,7 @@ public:
         int x = -500;
         int y = 1000;
         int w = 1000;
-        int h = 10000;
+        int h = 100;
         for (int i = 0; i < colliderCount; i++)
         {
             colliders.push_back(RectCollider(x, y, w, h));
