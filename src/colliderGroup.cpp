@@ -3,9 +3,19 @@ class ColliderGroup
 public:
     ColliderGroup()
     {
-        colliderCount = 1;
+        colliderCount = 100;
         colliders.reserve(colliderCount);
-        colliders[0] = RectCollider(-1000, 1000, 2000, 10000);
+        int x = -500;
+        int y = 1000;
+        int w = 1000;
+        int h = 100;
+        for (int i = 0; i < colliderCount; i++)
+        {
+            colliders.push_back(RectCollider(x, y, w, h));
+            x += 1100;
+            y -= 100;
+        }
+        cout << colliderCount << endl << colliders.size() << endl;
     }
 
     vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
@@ -17,11 +27,11 @@ public:
         {
             if (SDL_HasIntersection(rect, colliders[i].getRect()))
             {
-                returnRects.emplace_back(colliders[i].getRect());
+                returnRects.push_back(colliders[i].getRect());
                 actualIndex += 1;
             }
         }
-        returnRects.resize(actualIndex + 1);
+        returnRects.resize(actualIndex);
         return returnRects;
     }
 

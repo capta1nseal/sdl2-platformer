@@ -83,15 +83,15 @@ public:
 
         updateHitboxPosition();
 
-        collideRect(level->getTestCollider());
+        // collideRect(level->getTestCollider());
 
-        /*
+        
         vector<SDL_Rect *> collideRects = level->getOverlappedColliders(&hitbox);
-        for (int i = collideRects.size(); i > 0; i--)
+        for (int i = 0; i < collideRects.size(); i++)
         {
             collideRect(collideRects[i]);
         }
-        */
+        
 
         updateHitboxPosition();
     }
