@@ -8,24 +8,24 @@ public:
         int x = -500;
         int y = 1000;
         int w = 1000;
-        int h = 100000;
+        int h = 10000;
         for (int i = 0; i < colliderCount; i++)
         {
             colliders.push_back(RectCollider(x, y, w, h));
             x += 1100;
-            y -= 100;
+            y -= 75;
         }
         cout << colliderCount << endl << colliders.size() << endl;
     }
 
-    vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
+    vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
     {
-        vector<SDL_Rect *> returnRects;
+        vector<SDL_FRect *> returnRects;
         returnRects.reserve(colliderCount);
         int actualIndex = 0;
         for (int i = 0; i < colliderCount; i++)
         {
-            if (SDL_HasIntersection(rect, colliders[i].getRect()))
+            if (hasIntersectionF(rect, colliders[i].getRect()))
             {
                 returnRects.push_back(colliders[i].getRect());
                 actualIndex += 1;
@@ -35,7 +35,7 @@ public:
         return returnRects;
     }
 
-    SDL_Rect *getTestCollider()
+    SDL_FRect *getTestCollider()
     {
         return colliders[0].getRect();
     }

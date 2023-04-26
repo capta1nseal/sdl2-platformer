@@ -15,14 +15,9 @@ public:
         colliders.draw(renderer, camera);
     }
 
-    vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
+    vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
     {
         return colliders.getOverlappedColliders(rect);
-    }
-
-    SDL_Rect *getTestCollider()
-    {
-        return colliders.getTestCollider();
     }
 
 private:

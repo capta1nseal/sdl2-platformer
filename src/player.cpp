@@ -18,8 +18,8 @@ public:
         playerWidth = 32;
         playerHeight = 32;
 
-        hitbox.w = playerWidth + 2;
-        hitbox.h = playerHeight + 2;
+        hitbox.w = playerWidth;
+        hitbox.h = playerHeight;
         updateHitboxPosition();
 
         onGround = false;
@@ -86,7 +86,7 @@ public:
         // collideRect(level->getTestCollider());
 
         
-        vector<SDL_Rect *> collideRects = level->getOverlappedColliders(&hitbox);
+        vector<SDL_FRect *> collideRects = level->getOverlappedColliders(&hitbox);
         for (int i = 0; i < collideRects.size(); i++)
         {
             collideRect(collideRects[i]);
@@ -137,20 +137,20 @@ private:
     int playerWidth = 32;
     int playerHeight = 32;
 
-    SDL_Rect hitbox;
-    SDL_Rect collisionRect;
+    SDL_FRect hitbox;
+    SDL_FRect collisionRect;
 
     Input *input;
 
     void updateHitboxPosition()
     {
-        hitbox.x = position.x - 1;
-        hitbox.y = position.y - 1;
+        hitbox.x = position.x;
+        hitbox.y = position.y;
     }
 
-    void collideRect(SDL_Rect *rect)
+    void collideRect(SDL_FRect *rect)
     {
-        if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
+        if (intersectRectF(&hitbox, rect, &collisionRect))
         {
             if (collisionRect.w >= collisionRect.h)
             {

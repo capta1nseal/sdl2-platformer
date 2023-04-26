@@ -30,7 +30,7 @@ public:
         colour.a = 255;
     }
 
-    SDL_Rect *getRect()
+    SDL_FRect *getRect()
     {
         return &hitbox;
     }
@@ -48,6 +48,6 @@ public:
         SDL_RenderFillRectF(renderer, &drawRect);
     }
 private:
-    SDL_Rect hitbox;
+    SDL_FRect hitbox;
     SDL_Colour colour;
 };
