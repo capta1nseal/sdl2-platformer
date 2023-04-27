@@ -20,12 +20,12 @@ public:
                 y -= 100;
             }
         }
-        cout << colliderCount << endl << colliders.size() << endl;
+        std::cout << colliderCount << std::endl << colliders.size() << std::endl;
     }
 
-    vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
+    std::vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
     {
-        vector<SDL_FRect *> returnRects;
+        std::vector<SDL_FRect *> returnRects;
         returnRects.reserve(colliderCount);
         int actualIndex = 0;
         for (int i = 0; i < colliderCount; i++)
@@ -53,6 +53,6 @@ public:
         }
     }
 private:
-    vector<RectCollider> colliders;
+    std::vector<RectCollider> colliders;
     size_t colliderCount;
 };

@@ -1,0 +1,6 @@
+class LevelEditor
+{
+    LevelEditor()
+    {
+    }
+};

@@ -29,22 +29,27 @@ bool intersectRectF(SDL_FRect *rectA, SDL_FRect *rectB, SDL_FRect *intersectRect
     if (rectB->x > rectA->x)
     {
         intersectRect->x = rectB->x;
-        intersectRect->w = min(rectA->w - (rectB->x - rectA->x), rectB->w);
+        intersectRect->w = std::min(rectA->w - (rectB->x - rectA->x), rectB->w);
     }
     else
     {
         intersectRect->x = rectA->x;
-        intersectRect->w = min(rectB->w - (rectA->x - rectB->x), rectA->w);
+        intersectRect->w = std::min(rectB->w - (rectA->x - rectB->x), rectA->w);
     }
     if (rectB->y > rectA->y)
     {
         intersectRect->y = rectB->y;
-        intersectRect->h = min(rectA->h - (rectB->y - rectA->y), rectB->h);
+        intersectRect->h = std::min(rectA->h - (rectB->y - rectA->y), rectB->h);
     }
     else
     {
         intersectRect->y = rectA->y;
-        intersectRect->h = min(rectB->h - (rectA->y - rectB->y), rectA->h);
+        intersectRect->h = std::min(rectB->h - (rectA->y - rectB->y), rectA->h);
     }
     return true;
+}
+
+Vec2 getRectCentreF(SDL_FRect *rect)
+{
+    return Vec2(rect->x + rect->w / 2.0, rect->y + rect->w / 2.0);
 }

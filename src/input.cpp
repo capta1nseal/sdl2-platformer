@@ -48,7 +48,7 @@ public:
 
 private:
     static const int inputArraySize = 9;
-    array<bool, inputArraySize> inputArray;
+    std::array<bool, inputArraySize> inputArray;
     const Uint8 *keyboardState;
 };
 

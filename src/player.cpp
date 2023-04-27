@@ -82,7 +82,7 @@ public:
 
         onGround = false;
         
-        vector<SDL_FRect *> collideRects = level->getOverlappedColliders(&hitbox);
+        std::vector<SDL_FRect *> collideRects = level->getOverlappedColliders(&hitbox);
         for (int i = 0; i < collideRects.size(); i++)
         {
             collideRect(collideRects[i]);
@@ -107,6 +107,11 @@ public:
     Vec2 getCentre()
     {
         return addVec2(&position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
+    }
+
+    SDL_FRect *getRect()
+    {
+        return &hitbox;
     }
 
 private:

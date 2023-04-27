@@ -17,13 +17,11 @@
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
-using namespace std;
+// class for 2D vectors and operations
+#include "vec2.cpp"
 
 // some useful mathematical functions
 #include "math.cpp"
-
-// class for 2D vectors and operations
-#include "vec2.cpp"
 
 // class for holding and getting input state
 #include "input.cpp"
@@ -43,9 +41,9 @@ using namespace std;
 // class for player, includes controls, physics and drawing
 #include "player.cpp"
 
-chrono::_V2::steady_clock::time_point now()
+std::chrono::_V2::steady_clock::time_point now()
 {
-    return chrono::steady_clock::now();
+    return std::chrono::steady_clock::now();
 }
 
 class Game
@@ -63,14 +61,14 @@ public:
 
     void run()
     {
-        using chrono::operator""us;
+        using std::chrono::operator""us;
 
-        const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
-        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> start;
-        chrono::duration<double, micro> waitPeriod = targetRefreshTime;
-        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> nextTime;
+        const std::chrono::duration<double, std::micro> targetRefreshTime = 1000000.0us / framerate;
+        std::chrono::time_point<std::chrono::_V2::steady_clock, std::chrono::duration<double, std::chrono::_V2::steady_clock::period>> start;
+        std::chrono::duration<double, std::micro> waitPeriod = targetRefreshTime;
+        std::chrono::time_point<std::chrono::_V2::steady_clock, std::chrono::duration<double, std::chrono::_V2::steady_clock::period>> nextTime;
 
-        chrono::duration<double> delta;
+        std::chrono::duration<double> delta;
 
         const int tuningIterations = (int)floor(framerate);
         int tuningIterator = 0;
@@ -96,7 +94,7 @@ public:
 
             draw();
 
-            this_thread::sleep_until(nextTime);
+            std::this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
     }
@@ -168,7 +166,10 @@ private:
     {
         camera.setInput(&input);
 
+        camera.setFollowRect(player.getRect());
+
         camera.initializeResolution(displayWidth, displayHeight);
+        camera.setMode(1);
         camera.setPosition(player.getCentre());
     }
 
@@ -209,7 +210,7 @@ private:
             player.tick(delta / (double)physicsSubsteps, &level);
         }
 
-        camera.setTargetPosition(player.getCentre());
+        // camera.setTargetPosition(player.getCentre());
         camera.tick(delta);
     }
 
