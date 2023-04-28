@@ -133,13 +133,14 @@ private:
         displayWidth = displayMode.w;
         displayHeight = displayMode.h;
 
+        Uint32 windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP;
         window = SDL_CreateWindow(
             "sdl-2d-game",
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             displayWidth, displayHeight,
-            SDL_WINDOW_FULLSCREEN_DESKTOP);
+            windowFlags);
 
-        Uint32 renderFlags = SDL_RENDERER_ACCELERATED;
+        Uint32 renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
         renderer = SDL_CreateRenderer(window, -1, renderFlags);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderClear(renderer);

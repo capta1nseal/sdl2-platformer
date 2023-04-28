@@ -17,7 +17,7 @@ public:
         colour.a = 255;
     }
 
-    RectCollider(int x, int y, int w, int h)
+    RectCollider(double x, double y, double w, double h)
     {
         hitbox.x = x;
         hitbox.y = y;

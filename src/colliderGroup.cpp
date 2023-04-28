@@ -17,7 +17,7 @@ public:
             {
                 colliders.push_back(RectCollider(x, y, w, h));
                 x += 1100;
-                y -= 100;
+                y += 100;
             }
         }
         std::cout << colliderCount << std::endl << colliders.size() << std::endl;
