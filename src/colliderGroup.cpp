@@ -11,7 +11,7 @@ public:
         int h = 100;
         for (int j = 0; j < 100; j++)
         {
-            x = -500;
+            x = -500 + 50 * j;
             y = 1000 + j * 200;
             for (int i = 0; i < 100; i++)
             {
