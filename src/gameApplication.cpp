@@ -79,22 +79,22 @@ public:
         while (running)
         {
             start = now();
-            nextTime = start + waitPeriod;
+            // nextTime = start + waitPeriod;
 
-            tuningIterator++;
-            if (tuningIterator == tuningIterations)
-            {
-                waitPeriod += targetRefreshTime - (now() - tuningPeriodStart) / tuningIterations;
-                tuningIterator = 0;
-                tuningPeriodStart = now();
-            }
+            // tuningIterator++;
+            // if (tuningIterator == tuningIterations)
+            // {
+            //     waitPeriod += targetRefreshTime - (now() - tuningPeriodStart) / tuningIterations;
+            //     tuningIterator = 0;
+            //     tuningPeriodStart = now();
+            // }
             handleEvents();
 
             tick(delta.count());
 
             draw();
 
-            std::this_thread::sleep_until(nextTime);
+            // std::this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
     }
