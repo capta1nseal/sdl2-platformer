@@ -15,7 +15,7 @@ public:
         colliders.draw(renderer, camera);
     }
 
-    vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
+    std::vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
     {
         return colliders.getOverlappedColliders(rect);
     }

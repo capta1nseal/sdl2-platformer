@@ -3,29 +3,34 @@ class ColliderGroup
 public:
     ColliderGroup()
     {
-        colliderCount = 100;
+        colliderCount = 100 * 100;
         colliders.reserve(colliderCount);
         int x = -500;
         int y = 1000;
         int w = 1000;
-        int h = 100000;
-        for (int i = 0; i < colliderCount; i++)
+        int h = 100;
+        for (int j = 0; j < 100; j++)
         {
-            colliders.push_back(RectCollider(x, y, w, h));
-            x += 1100;
-            y -= 100;
+            x = -500;
+            y = 1000 + j * 200;
+            for (int i = 0; i < 100; i++)
+            {
+                colliders.push_back(RectCollider(x, y, w, h));
+                x += 1100;
+                y += 100;
+            }
         }
-        cout << colliderCount << endl << colliders.size() << endl;
+        std::cout << colliderCount << std::endl << colliders.size() << std::endl;
     }
 
-    vector<SDL_Rect *> getOverlappedColliders(SDL_Rect *rect)
+    std::vector<SDL_FRect *> getOverlappedColliders(SDL_FRect *rect)
     {
-        vector<SDL_Rect *> returnRects;
+        std::vector<SDL_FRect *> returnRects;
         returnRects.reserve(colliderCount);
         int actualIndex = 0;
         for (int i = 0; i < colliderCount; i++)
         {
-            if (SDL_HasIntersection(rect, colliders[i].getRect()))
+            if (hasIntersectionF(rect, colliders[i].getRect()))
             {
                 returnRects.push_back(colliders[i].getRect());
                 actualIndex += 1;
@@ -43,6 +48,6 @@ public:
         }
     }
 private:
-    vector<RectCollider> colliders;
+    std::vector<RectCollider> colliders;
     size_t colliderCount;
 };

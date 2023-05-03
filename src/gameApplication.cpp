@@ -17,13 +17,11 @@
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
-using namespace std;
+// class for 2D vectors and operations
+#include "vec2.cpp"
 
 // some useful mathematical functions
 #include "math.cpp"
-
-// class for 2D vectors and operations
-#include "vec2.cpp"
 
 // class for holding and getting input state
 #include "input.cpp"
@@ -43,9 +41,9 @@ using namespace std;
 // class for player, includes controls, physics and drawing
 #include "player.cpp"
 
-chrono::_V2::steady_clock::time_point now()
+std::chrono::_V2::steady_clock::time_point now()
 {
-    return chrono::steady_clock::now();
+    return std::chrono::steady_clock::now();
 }
 
 class Game
@@ -63,14 +61,14 @@ public:
 
     void run()
     {
-        using chrono::operator""us;
+        using std::chrono::operator""us;
 
-        const chrono::duration<double, micro> targetRefreshTime = 1000000.0us / framerate;
-        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> start;
-        chrono::duration<double, micro> waitPeriod = targetRefreshTime;
-        chrono::time_point<chrono::_V2::steady_clock, chrono::duration<double, chrono::_V2::steady_clock::period>> nextTime;
+        const std::chrono::duration<double, std::micro> targetRefreshTime = 1000000.0us / framerate;
+        std::chrono::time_point<std::chrono::_V2::steady_clock, std::chrono::duration<double, std::chrono::_V2::steady_clock::period>> start;
+        std::chrono::duration<double, std::micro> waitPeriod = targetRefreshTime;
+        std::chrono::time_point<std::chrono::_V2::steady_clock, std::chrono::duration<double, std::chrono::_V2::steady_clock::period>> nextTime;
 
-        chrono::duration<double> delta;
+        std::chrono::duration<double> delta;
 
         const int tuningIterations = (int)floor(framerate);
         int tuningIterator = 0;
@@ -96,7 +94,7 @@ public:
 
             draw();
 
-            this_thread::sleep_until(nextTime);
+            std::this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
     }
@@ -135,13 +133,14 @@ private:
         displayWidth = displayMode.w;
         displayHeight = displayMode.h;
 
+        Uint32 windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP;
         window = SDL_CreateWindow(
             "sdl-2d-game",
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             displayWidth, displayHeight,
-            SDL_WINDOW_FULLSCREEN_DESKTOP);
+            windowFlags);
 
-        Uint32 renderFlags = SDL_RENDERER_ACCELERATED;
+        Uint32 renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
         renderer = SDL_CreateRenderer(window, -1, renderFlags);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderClear(renderer);
@@ -168,7 +167,10 @@ private:
     {
         camera.setInput(&input);
 
+        camera.setFollowRect(player.getRect());
+
         camera.initializeResolution(displayWidth, displayHeight);
+        camera.setMode(1);
         camera.setPosition(player.getCentre());
     }
 
@@ -209,16 +211,14 @@ private:
             player.tick(delta / (double)physicsSubsteps, &level);
         }
 
-        camera.setTargetPosition(player.getCentre());
+        // camera.setTargetPosition(player.getCentre());
         camera.tick(delta);
     }
 
     void draw()
     {
-        SDL_RenderClear(renderer);
-
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderFillRect(renderer, NULL);
+        SDL_RenderClear(renderer);
 
         level.drawColliders(renderer, &camera);
 

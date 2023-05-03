@@ -17,7 +17,7 @@ public:
         colour.a = 255;
     }
 
-    RectCollider(int x, int y, int w, int h)
+    RectCollider(double x, double y, double w, double h)
     {
         hitbox.x = x;
         hitbox.y = y;
@@ -30,7 +30,7 @@ public:
         colour.a = 255;
     }
 
-    SDL_Rect *getRect()
+    SDL_FRect *getRect()
     {
         return &hitbox;
     }
@@ -38,8 +38,7 @@ public:
     void draw(SDL_Renderer *renderer, Camera* camera)
     {
         SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
-        SDL_FRect drawRect;
-        Vec2 drawPosition = camera->mapCoordinate(Vec2(hitbox.x, hitbox.y));
+        drawPosition.set(camera->mapCoordinate(Vec2(hitbox.x, hitbox.y)));
         double drawScale = camera->getScale();
         drawRect.x = drawPosition.x;
         drawRect.y = drawPosition.y;
@@ -48,6 +47,8 @@ public:
         SDL_RenderFillRectF(renderer, &drawRect);
     }
 private:
-    SDL_Rect hitbox;
+    SDL_FRect hitbox;
+    Vec2 drawPosition;
+    SDL_FRect drawRect;
     SDL_Colour colour;
 };

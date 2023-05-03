@@ -18,8 +18,8 @@ public:
         playerWidth = 32;
         playerHeight = 32;
 
-        hitbox.w = playerWidth + 2;
-        hitbox.h = playerHeight + 2;
+        hitbox.w = playerWidth;
+        hitbox.h = playerHeight;
         updateHitboxPosition();
 
         onGround = false;
@@ -60,9 +60,9 @@ public:
                 acceleration.x -= walkAcceleration * airControl;
         }
 
-        acceleration.add(gravityVector);
+        acceleration.add(&gravityVector);
 
-        acceleration.add(scaleVec2(velocity, -1 * airResistance));
+        acceleration.subtract(scaleVec2(&velocity, airResistance));
 
         if (onGround)
         {
@@ -71,19 +71,18 @@ public:
 
         acceleration.scale(delta);
 
-        velocity.add(acceleration);
+        velocity.add(&acceleration);
 
         acceleration.zero();
 
-        previousPosition.set(position);
+        previousPosition.set(&position);
 
-        position.add(scaleVec2(velocity, delta));
+        position.add(scaleVec2(&velocity, delta));
+        updateHitboxPosition();
 
         onGround = false;
-
-        updateHitboxPosition();
         
-        vector<SDL_Rect *> collideRects = level->getOverlappedColliders(&hitbox);
+        std::vector<SDL_FRect *> collideRects = level->getOverlappedColliders(&hitbox);
         for (int i = 0; i < collideRects.size(); i++)
         {
             collideRect(collideRects[i], delta);
@@ -96,8 +95,7 @@ public:
     void draw(SDL_Renderer *renderer, Camera *camera)
     {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_FRect drawRect;
-        Vec2 drawPosition = camera->mapCoordinate(position);
+        drawPosition.set(camera->mapCoordinate(&position));
         double drawScale = camera->getScale();
         drawRect.x = drawPosition.x;
         drawRect.y = drawPosition.y;
@@ -108,7 +106,12 @@ public:
 
     Vec2 getCentre()
     {
-        return addVec2(position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
+        return addVec2(&position, Vec2(hitbox.w * 0.5, hitbox.h * 0.5));
+    }
+
+    SDL_FRect *getRect()
+    {
+        return &hitbox;
     }
 
 private:
@@ -134,20 +137,23 @@ private:
     int playerWidth = 32;
     int playerHeight = 32;
 
-    SDL_Rect hitbox;
-    SDL_Rect collisionRect;
+    SDL_FRect hitbox;
+    SDL_FRect collisionRect;
 
     Input *input;
 
+    Vec2 drawPosition;
+    SDL_FRect drawRect;
+
     void updateHitboxPosition()
     {
-        hitbox.x = position.x - 1;
-        hitbox.y = position.y - 1;
+        hitbox.x = position.x;
+        hitbox.y = position.y;
     }
 
     void collideRect(SDL_Rect *rect, double delta)
     {
-        if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
+        if (intersectRectF(&hitbox, rect, &collisionRect))
         {
             if (collisionRect.w >= collisionRect.h)
             {
