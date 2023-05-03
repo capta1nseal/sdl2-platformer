@@ -4,9 +4,10 @@
 // math. possibly unused.
 #include <cmath>
 
-// accurately timing the main loop execution
+// accurately timing loop execution and multithreading
 #include <chrono>
 #include <thread>
+#include <mutex>
 
 // input array
 #include <array>
