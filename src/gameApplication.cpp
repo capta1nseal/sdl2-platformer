@@ -92,6 +92,8 @@ public:
 
             tick(delta.count());
 
+            std::cout << delta.count() << '\n';
+
             draw();
 
             // std::this_thread::sleep_until(nextTime);
@@ -135,7 +137,7 @@ private:
 
         Uint32 windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP;
         window = SDL_CreateWindow(
-            "sdl-2d-game",
+            "sdl-platformer",
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             displayWidth, displayHeight,
             windowFlags);
