@@ -5,12 +5,12 @@ public:
     {
         gravityVector.y = 4000;
 
-        walkAcceleration = 7500;
+        walkAcceleration = 6000;
+        airAcceleration = 500;
         jumpVelocity = 1100;
         jumpFriction = 0.85;
 
         jumpBonus = 5.0;
-        airControl = 0.1;
 
         airResistance = 0.2;
         surfaceFriction = 10.0;
@@ -48,7 +48,7 @@ public:
             else if (onGround)
                 acceleration.x += walkAcceleration;
             else
-                acceleration.x += walkAcceleration * airControl;
+                acceleration.x += airAcceleration;
         }
         if (input->leftPressed()) // left arrow
         {
@@ -57,7 +57,7 @@ public:
             else if (onGround)
                 acceleration.x -= walkAcceleration;
             else
-                acceleration.x -= walkAcceleration * airControl;
+                acceleration.x -= airAcceleration;
         }
 
         acceleration.add(&gravityVector);
@@ -125,11 +125,11 @@ private:
     bool jumping;
 
     double walkAcceleration;
+    double airAcceleration;
     double jumpVelocity;
     double jumpFriction;
 
     double jumpBonus;
-    double airControl;
 
     double airResistance;
     double surfaceFriction;
