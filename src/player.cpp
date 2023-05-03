@@ -151,7 +151,7 @@ private:
         hitbox.y = position.y;
     }
 
-    void collideRect(SDL_Rect *rect, double delta)
+    void collideRect(SDL_FRect *rect, double delta)
     {
         if (intersectRectF(&hitbox, rect, &collisionRect))
         {
