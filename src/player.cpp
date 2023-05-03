@@ -6,7 +6,7 @@ public:
         gravityVector.y = 4000;
 
         walkAcceleration = 5000;
-        jumpVelocity = 1000;
+        jumpVelocity = 1100;
         jumpFriction = 0.85;
 
         jumpBonus = 5.0;

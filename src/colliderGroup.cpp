@@ -16,7 +16,7 @@ public:
             for (int i = 0; i < 100; i++)
             {
                 colliders.push_back(RectCollider(x, y, w, h));
-                x += 1100;
+                x += 1200;
                 y += 100;
             }
         }
