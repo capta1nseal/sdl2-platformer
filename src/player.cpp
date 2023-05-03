@@ -82,14 +82,11 @@ public:
         onGround = false;
 
         updateHitboxPosition();
-
-        // collideRect(level->getTestCollider());
-
         
         vector<SDL_Rect *> collideRects = level->getOverlappedColliders(&hitbox);
         for (int i = 0; i < collideRects.size(); i++)
         {
-            collideRect(collideRects[i]);
+            collideRect(collideRects[i], delta);
         }
         
 
@@ -148,7 +145,7 @@ private:
         hitbox.y = position.y - 1;
     }
 
-    void collideRect(SDL_Rect *rect)
+    void collideRect(SDL_Rect *rect, double delta)
     {
         if (SDL_IntersectRect(&hitbox, rect, &collisionRect))
         {

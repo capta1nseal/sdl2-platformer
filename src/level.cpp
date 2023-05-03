@@ -20,11 +20,6 @@ public:
         return colliders.getOverlappedColliders(rect);
     }
 
-    SDL_Rect *getTestCollider()
-    {
-        return colliders.getTestCollider();
-    }
-
 private:
     const char *path;
     ColliderGroup colliders;

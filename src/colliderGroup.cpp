@@ -35,11 +35,6 @@ public:
         return returnRects;
     }
 
-    SDL_Rect *getTestCollider()
-    {
-        return colliders[0].getRect();
-    }
-
     void draw(SDL_Renderer *renderer, Camera *camera)
     {
         for (int i = 0; i < colliderCount; i++)
