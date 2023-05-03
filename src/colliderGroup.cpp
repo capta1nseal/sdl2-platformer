@@ -7,7 +7,7 @@ public:
         colliders.reserve(colliderCount);
         int x = -500;
         int y = 1000;
-        int w = 1000;
+        int w = 250;
         int h = 100;
         for (int j = 0; j < 100; j++)
         {
@@ -16,7 +16,7 @@ public:
             for (int i = 0; i < 100; i++)
             {
                 colliders.push_back(RectCollider(x, y, w, h));
-                x += 1200;
+                x += 400;
                 y += 100;
             }
         }
