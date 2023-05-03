@@ -5,7 +5,7 @@ public:
     {
         gravityVector.y = 4000;
 
-        walkAcceleration = 4000;
+        walkAcceleration = 5000;
         jumpVelocity = 1000;
         jumpFriction = 0.85;
 
@@ -13,7 +13,7 @@ public:
         airControl = 0.1;
 
         airResistance = 0.2;
-        surfaceFriction = 5.0;
+        surfaceFriction = 6.0;
 
         playerWidth = 32;
         playerHeight = 32;
