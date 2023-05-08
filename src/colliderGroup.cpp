@@ -8,7 +8,7 @@ public:
         int x = -500;
         int y = 1000;
         int w = 250;
-        int h = 100;
+        int h = 10;
         for (int j = 0; j < 100; j++)
         {
             x = -500 + 50 * j;
