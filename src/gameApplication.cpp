@@ -214,7 +214,6 @@ private:
             player.tick(delta / (double)physicsSubsteps, &level);
         }
 
-        // camera.setTargetPosition(player.getCentre());
         camera.tick(delta);
     }
 

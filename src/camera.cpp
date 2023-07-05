@@ -13,7 +13,7 @@ public:
         minScale = 0.1;
         maxScale = 10.0;
 
-        mode = 2;
+        mode = 1;
     }
 
     void initializeResolution(int initialDisplayWidth, int initialDisplayHeight)
@@ -104,9 +104,12 @@ public:
         {
             case 0:
                 setTargetPosition(followPosition);
+                break;
             case 1:
                 setTargetPosition(getRectCentreF(followRect));
+                break;
             case 2:
+                std::cout << "hi\n";
                 if (input->upPressed())
                     targetPosition.add(Vec2( 0.0,-1.0 * motionSpeed * delta));
                 if (input->rightPressed())
@@ -115,6 +118,9 @@ public:
                     targetPosition.add(Vec2( 0.0, 1.0 * motionSpeed * delta));
                 if (input->leftPressed())
                     targetPosition.add(Vec2(-1.0 * motionSpeed * delta, 0.0));
+                    break;
+            default:
+                std::cout << "hello\n";
         }
         
         position.add(scaleVec2(subtractVec2(targetPosition, position), positionApproachQuotient * delta));
