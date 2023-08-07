@@ -1,3 +1,14 @@
+#ifndef _SDL2PLEVEL_
+#define _SDL2PLEVEL_
+
+#include <vector>
+
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_rect.h>
+
+#include "camera.hpp"
+#include "colliderGroup.hpp"
+
 class Level
 {
 public:
@@ -24,3 +35,5 @@ private:
     const char *path;
     ColliderGroup colliders;
 };
+
+#endif

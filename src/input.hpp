@@ -1,3 +1,10 @@
+#ifndef _SDL2PINPUT_
+#define _SDL2PINPUT_
+
+#include <array>
+
+#include <SDL2/SDL_scancode.h>
+
 class Input
 {
 public:
@@ -64,3 +71,5 @@ private:
 7 - +
 8 - -
 */
+
+#endif

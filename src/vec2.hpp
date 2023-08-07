@@ -1,3 +1,8 @@
+#ifndef _SDL2PVEC2_
+#define _SDL2PVEC2_
+
+#include <cmath>
+
 struct Vec2
 {
     double x;
@@ -68,7 +73,7 @@ struct Vec2
 
     double magnitude()
     {
-        return sqrt(x * x + y * y);
+        return std::sqrt(x * x + y * y);
     }
 };
 
@@ -84,3 +89,5 @@ Vec2 subtractVec2(Vec2 *first, Vec2 *second) { return Vec2(first->x - second->x,
 
 Vec2 scaleVec2(Vec2 vector, double scalar) { return Vec2(vector.x * scalar, vector.y * scalar); }
 Vec2 scaleVec2(Vec2 *vector, double scalar) { return Vec2(vector->x * scalar, vector->y * scalar); }
+
+#endif

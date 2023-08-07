@@ -1,3 +1,14 @@
+#ifndef _SDL2PCAMERA_
+#define _SDL2PCAMERA_
+
+#include <iostream>
+
+#include <SDL2/SDL_rect.h>
+
+#include "math.hpp"
+#include "vec2.hpp"
+#include "input.hpp"
+
 class Camera
 {
 public:
@@ -163,3 +174,5 @@ private:
         targetScale = clamp(targetScale / (1 + (zoomFactor - 1) * delta), minScale, maxScale);
     }
 };
+
+#endif

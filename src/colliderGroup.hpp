@@ -1,3 +1,16 @@
+#ifndef _SDL2PCOLLIDERGROUP_
+#define _SDL2PCOLLIDERGROUP_
+
+#include <iostream>
+#include <vector>
+
+#include <SDL2/SDL_rect.h>
+#include <SDL2/SDL_render.h>
+
+#include "rectCollider.hpp"
+#include "math.hpp"
+#include "camera.hpp"
+
 class ColliderGroup
 {
 public:
@@ -51,3 +64,5 @@ private:
     std::vector<RectCollider> colliders;
     size_t colliderCount;
 };
+
+#endif

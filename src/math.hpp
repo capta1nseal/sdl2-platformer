@@ -1,3 +1,12 @@
+#ifndef _SDL2PMATH_
+#define _SDL2PMATH_
+
+#include <algorithm>
+
+#include <SDL2/SDL_rect.h>
+
+#include "math.hpp"
+
 double clamp(double n, double min, double max)
 {
     if (n >= max)
@@ -53,3 +62,5 @@ Vec2 getRectCentreF(SDL_FRect *rect)
 {
     return Vec2(rect->x + rect->w / 2.0, rect->y + rect->w / 2.0);
 }
+
+#endif

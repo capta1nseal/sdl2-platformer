@@ -1,3 +1,13 @@
+#ifndef _SDL2PRECTCOLLIDER_
+#define _SDL2PRECTCOLLIDER_
+
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_rect.h>
+#include <SDL2/SDL_pixels.h>
+
+#include "vec2.hpp"
+#include "camera.hpp"
+
 class RectCollider
 {
 public:
@@ -52,3 +62,5 @@ private:
     SDL_FRect drawRect;
     SDL_Colour colour;
 };
+
+#endif

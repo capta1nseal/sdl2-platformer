@@ -1,4 +1,4 @@
-#include "gameApplication.cpp"
+#include "gameApplication.hpp"
 
 int main(int argc, char *argv[])
 {

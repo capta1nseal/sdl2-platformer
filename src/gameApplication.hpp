@@ -1,46 +1,39 @@
+#ifndef _SDL2PGAMEAPPLICATION_
+#define _SDL2PGAMEAPPLICATION_
+
 // debugging
 #include <iostream>
-
-// math. possibly unused.
-#include <cmath>
 
 // accurately timing loop execution and multithreading
 #include <chrono>
 #include <thread>
-#include <mutex>
-
-// input array
-#include <array>
-
-// grouping colliders
-#include <vector>
 
 // interface with display drivers, also some game-related features
 #include <SDL2/SDL.h>
 
 // class for 2D vectors and operations
-#include "vec2.cpp"
+#include "vec2.hpp"
 
 // some useful mathematical functions
-#include "math.cpp"
+#include "math.hpp"
 
 // class for holding and getting input state
-#include "input.cpp"
+#include "input.hpp"
 
 // class for camera positioning and scaling
-#include "camera.cpp"
+#include "camera.hpp"
 
 // class for an axis-aligned bounding box collider
-#include "rectCollider.cpp"
+#include "rectCollider.hpp"
 
 // class for grouping and interacting with colliders
-#include "colliderGroup.cpp"
+#include "colliderGroup.hpp"
 
 // class for storing a level's colliders and art during runtime
-#include "level.cpp"
+#include "level.hpp"
 
 // class for player, includes controls, physics and drawing
-#include "player.cpp"
+#include "player.hpp"
 
 std::chrono::_V2::steady_clock::time_point now()
 {
@@ -146,7 +139,6 @@ private:
         Uint32 renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
         renderer = SDL_CreateRenderer(window, -1, renderFlags);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_RenderClear(renderer);
 
         keyboardState = SDL_GetKeyboardState(NULL);
     }
@@ -229,3 +221,5 @@ private:
         SDL_RenderPresent(renderer);
     }
 };
+
+#endif
