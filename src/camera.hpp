@@ -120,7 +120,6 @@ public:
                 setTargetPosition(getRectCentreF(followRect));
                 break;
             case 2:
-                std::cout << "hi\n";
                 if (input->upPressed())
                     targetPosition.add(Vec2( 0.0,-1.0 * motionSpeed * delta));
                 if (input->rightPressed())
@@ -129,9 +128,9 @@ public:
                     targetPosition.add(Vec2( 0.0, 1.0 * motionSpeed * delta));
                 if (input->leftPressed())
                     targetPosition.add(Vec2(-1.0 * motionSpeed * delta, 0.0));
-                    break;
+                break;
             default:
-                std::cout << "hello\n";
+                break;
         }
         
         position.add(scaleVec2(subtractVec2(targetPosition, position), positionApproachQuotient * delta));

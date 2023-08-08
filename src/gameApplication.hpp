@@ -93,6 +93,8 @@ public:
             // std::this_thread::sleep_until(nextTime);
             delta = now() - start;
         }
+
+        deInitializeSdl();
     }
 
 private:
@@ -187,6 +189,8 @@ private:
                 default:
                     break;
                 }
+            default:
+                break;
             }
         }
 
@@ -219,6 +223,13 @@ private:
         player.draw(renderer, &camera);
 
         SDL_RenderPresent(renderer);
+    }
+
+    void deInitializeSdl()
+    {
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
     }
 };
 

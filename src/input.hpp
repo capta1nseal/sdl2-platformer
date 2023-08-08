@@ -22,7 +22,7 @@ public:
     void updateInputs()
     {
         for (int i = 0; i < inputArraySize; i++)
-            inputArray[i] = 0;
+            inputArray[i] = false;
         if (keyboardState[SDL_SCANCODE_UP])
             inputArray[0] = true;
         if (keyboardState[SDL_SCANCODE_RIGHT])
